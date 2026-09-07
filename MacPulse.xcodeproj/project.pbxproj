@@ -347,6 +347,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/MacPulse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MacPulse;
 				INFOPLIST_KEY_CFBundleIconFile = MacPulse;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -648,6 +649,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/MacPulse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MacPulse;
 				INFOPLIST_KEY_CFBundleIconFile = MacPulse;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -690,6 +692,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/MacPulse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MacPulse;
 				INFOPLIST_KEY_CFBundleIconFile = MacPulse;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
