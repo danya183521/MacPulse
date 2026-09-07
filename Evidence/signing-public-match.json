@@ -1,0 +1,31 @@
+{
+  "coverage" : [
+    {
+      "keychain" : "login.keychain-db",
+      "privateKeyReferences" : 1,
+      "publicKeysCompared" : 0,
+      "queryStatus" : 0
+    },
+    {
+      "keychain" : "System.keychain",
+      "privateKeyReferences" : 2,
+      "publicKeysCompared" : 0,
+      "queryStatus" : 0
+    }
+  ],
+  "developmentCertificates" : [
+    {
+      "certificateSHA256" : "24e36b1ea7ade59e97353c3d4691939523969adf65942ef2bb45c18f8e296e90",
+      "matchingPrivateKeyInInspectedKeychains" : false,
+      "publicKeySHA256" : "8df2187cddb8e3cd8d209afaf46fb739d3038dc9ad4975acaee2ae78ce496e82",
+      "serial" : "11415d8d930f917a274ef3f56ba4a3c5"
+    },
+    {
+      "certificateSHA256" : "582967405f9f6a30eb031ec11a068a0fcf5bed996f13d890a8c7e081d9e66499",
+      "matchingPrivateKeyInInspectedKeychains" : false,
+      "publicKeySHA256" : "27307bef846377543ba4785b722158f278d9eda6c34a56dfc0206e49f3d6b76c",
+      "serial" : "7318d5950a7a8e8139a184e600bfb093"
+    }
+  ],
+  "method" : "Compared only exported PUBLIC keys; private key material was never exported, signed with, or printed."
+}

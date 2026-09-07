@@ -14,7 +14,7 @@
 | 6 | Menu Bar panel | Реальный NSPopover показал CPU/RAM/network/temperature/battery/power/GPU/storage; переход в Settings проверен. Последняя правка высоты и освобождения hosting controller требует повторной UI-проверки. |
 | 7 | Dashboard | Overview, реальные значения и растущие графики проверены в Light/Dark; на финальной сборке AX повторно показал новые значения и увеличение истории с 3 до 11 samples. Все подробные страницы созданы; повторный последовательный UI-аудит прерван ошибкой CUA native pipe. Не считать все страницы отдельно проверенными. |
 | 8 | Settings | Menu Bar controls, порядок, theme, General, persistence проверены. Launch at Login и доставка notifications не активировались без разрешения. |
-| 9 | WidgetKit | Extension компилируется; payload round-trip на реальных данных прошёл. **BLOCKED:** signing identities = 0; Signed Debug требует Development Team для обоих targets. App Group и реальное отображение в WidgetKit не подтверждены. |
+| 9 | WidgetKit | Extension компилируется; payload round-trip на реальных данных прошёл. Personal Team назначена обоим targets, но `security find-identity -v -p codesigning` показывает 0 identities; оба сертификата в Xcode имеют Missing Private Key, а третий Xcode не создаёт. App Group и реальное отображение в WidgetKit не подтверждены. |
 | 10 | Реальная CPU нагрузка | Native collector, XCTest, CPU workload 24.7% → 70.5%, изменение графика в Dashboard. |
 | 11 | Реальная память | Mach collector; physical bytes совпадают с sysctl; used сверяется с vm_stat formula. |
 | 12 | Реальная батарея | IOKit + pmset; percentage/state совпадают; charge и discharge наблюдались. Остальные values из реального registry. |
@@ -32,7 +32,7 @@
 
 ## Объективные внешние ограничения
 
-1. **Developer signing:** `security find-identity -v -p codesigning` → 0 valid identities. `Evidence/widget-signing-blocker.log` → оба targets требуют development team. Пользователю направлен запрос добавить свою команду в Xcode Accounts. Пароли/сертификаты не запрашиваются в чате. Установка signing, разрешённой App Group и реальный widget runtime остаются обязательными для полной цели.
+1. **Developer signing:** Personal Team уже назначена обоим Signed Debug targets. `security find-identity -v -p codesigning` → 0 valid identities; `security find-certificate` и сравнение публичных отпечатков подтверждают оба Apple Development certificates без соответствующего private key. Xcode отклоняет создание третьего сертификата (`You already have a current Development certificate or a pending certificate request.`). Для выпуска новой пары нужно вручную отозвать один из двух сертификатов в Apple Developer Certificates; я не выполнял отзыв. Пароли/сертификаты не запрашиваются в чате. Бесплатный локальный WidgetKit остаётся технически возможным, но пока не проверен.
 2. **CUA transport:** после успешных проверок Overview / panel / settings инструмент начал возвращать `Sky Computer Use native pipe closed before response`. После перезапуска финального приложения чтение Overview восстановилось, но на действии выбора CPU снова оборвался pipe. js_reset не помог. MacPulse продолжает работать; sample показывает обычный run loop, а не блокировку главного потока. Это ограничение проверки UI, а не доказательство неисправности приложения. Оно не обходится сторонней UI-автоматизацией.
 
 ## Следующие проверки после снятия ограничений
