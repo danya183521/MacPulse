@@ -13,6 +13,8 @@
 		1A2B3C4D5E6F708192A3B4C9 /* Sources/Core/Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */; };
 		A1B2C3D4E5F60718293A4B5E /* Sources/Core/ProcessMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* Sources/Core/ProcessMonitoring.swift */; };
 		A1B2C3D4E5F60718293A4B5F /* Sources/MacPulse/ProcessesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* Sources/MacPulse/ProcessesView.swift */; };
+		A1B2C3D4E5F60718293A4B60 /* Sources/Core/BatteryAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B61 /* Sources/Core/BatteryAnalytics.swift */; };
+		A1B2C3D4E5F60718293A4B62 /* Sources/MacPulse/BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B63 /* Sources/MacPulse/BatteryView.swift */; };
 		044071864FCE90ACB57DF431 /* Sources/MacPulse/SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB551C6FEBAA8BDE5B2604C3 /* Sources/MacPulse/SettingsView.swift */; };
 		05DA39414C0243591CD15ABA /* Sources/MacPulse/AlertEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924F705A6156FE603E39785 /* Sources/MacPulse/AlertEngine.swift */; };
 		14C7B1AFCFF016929525853A /* Sources/Widget/MacPulseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8ECAE7000FC7B897DEA94D /* Sources/Widget/MacPulseWidget.swift */; };
@@ -67,6 +69,8 @@
 		1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Sources/Core/Localizable.xcstrings; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B5C /* Sources/Core/ProcessMonitoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/Core/ProcessMonitoring.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B5D /* Sources/MacPulse/ProcessesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MacPulse/ProcessesView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B61 /* Sources/Core/BatteryAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/Core/BatteryAnalytics.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B63 /* Sources/MacPulse/BatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MacPulse/BatteryView.swift; sourceTree = "<group>"; };
 		03B9AB09A35384595FAE95F2 /* MacPulseWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacPulseWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E460760F08344CF93982B0 /* Sources/PrivateSensors/MPNetworkCounters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sources/PrivateSensors/MPNetworkCounters.m; sourceTree = "<group>"; };
 		0B8ECAE7000FC7B897DEA94D /* Sources/Widget/MacPulseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/Widget/MacPulseWidget.swift; sourceTree = "<group>"; };
@@ -119,11 +123,13 @@
 				1A2B3C4D5E6F708192A3B4C4 /* Sources/Core/Localization.swift */,
 				1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */,
 				A1B2C3D4E5F60718293A4B5C /* Sources/Core/ProcessMonitoring.swift */,
+				A1B2C3D4E5F60718293A4B61 /* Sources/Core/BatteryAnalytics.swift */,
 				A14A213F7A2E8C7D926DCAFD /* Sources/Core/Metrics.swift */,
 				4FAF38FB4A6F534BE9B11C82 /* Sources/Core/WidgetSnapshot.swift */,
 				8924F705A6156FE603E39785 /* Sources/MacPulse/AlertEngine.swift */,
 				24791D2A1283135B5C64FDCD /* Sources/MacPulse/Dashboard.swift */,
 				A1B2C3D4E5F60718293A4B5D /* Sources/MacPulse/ProcessesView.swift */,
+				A1B2C3D4E5F60718293A4B63 /* Sources/MacPulse/BatteryView.swift */,
 				6D387D7D0D190AE9256394A0 /* Sources/MacPulse/MacPulse.icns */,
 				4D6FE94D4B5229BFC587715C /* Sources/MacPulse/MacPulseApp.swift */,
 				702002659DAF42ECACB64043 /* Sources/MacPulse/Preferences.swift */,
@@ -279,11 +285,13 @@
 			files = (
 				94288F304221786209FC7178 /* Sources/Core/Metrics.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5E /* Sources/Core/ProcessMonitoring.swift in Sources */,
+				A1B2C3D4E5F60718293A4B60 /* Sources/Core/BatteryAnalytics.swift in Sources */,
 				1A2B3C4D5E6F708192A3B4C5 /* Sources/Core/Localization.swift in Sources */,
 				7360B5A8B006BE51C6309B81 /* Sources/Core/WidgetSnapshot.swift in Sources */,
 				05DA39414C0243591CD15ABA /* Sources/MacPulse/AlertEngine.swift in Sources */,
 				B7297A3C51E52FB648585C48 /* Sources/MacPulse/Dashboard.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5F /* Sources/MacPulse/ProcessesView.swift in Sources */,
+				A1B2C3D4E5F60718293A4B62 /* Sources/MacPulse/BatteryView.swift in Sources */,
 				D009DF503C6C450BEFAF111E /* Sources/MacPulse/MacPulseApp.swift in Sources */,
 				54FF40080519482A78A21570 /* Sources/MacPulse/Preferences.swift in Sources */,
 				F533C7551EAFD67FC6932C8B /* Sources/MacPulse/SamplingEngine.swift in Sources */,

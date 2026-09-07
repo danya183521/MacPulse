@@ -138,3 +138,20 @@ Private ABI может измениться в обновлении macOS. Не�
 Исходники для исследования ABI и семантики: [Apple XNU](https://github.com/apple-oss-distributions/xnu), [macmon low-level sources](https://github.com/vladkens/macmon/blob/main/src_lib/sources.rs), [macmon metrics](https://github.com/vladkens/macmon/blob/main/src_lib/metrics.rs), [Stats RAM reader](https://github.com/exelban/stats/blob/master/Modules/RAM/readers.swift), [Stats sensor keys](https://github.com/exelban/stats/blob/master/Modules/Sensors/values.swift), [VirtualSMC sensor documentation](https://github.com/acidanthera/VirtualSMC/blob/master/Docs/SMCSensorKeys.txt). Эти проекты не подключены как dependencies.
 
 Нет backend, accounts, telemetry, analytics, subprocess polling в production или отправки системных метрик наружу. Нет remote repository, push, публикации или изменений других проектов.
+
+## Battery Intelligence
+
+Экран Battery расширяет существующий snapshot-поток: `MPNativeSensors` читает IOKit Power Sources и свойства `AppleSmartBattery`, `SamplingEngine` передаёт их в `BatteryIntelligence`, а SwiftUI только отображает готовую аналитику. Аппаратного второго sampler нет.
+
+- Ёмкости `AppleRawCurrentCapacity`, `AppleRawMaxCapacity` и `DesignCapacity` нормализуются в mAh. Health = `Full Charge Capacity / Design Capacity × 100`; при неверных или отсутствующих значениях выводится `—`.
+- Температура — `Temperature / 100` в °C; напряжение — `Voltage / 1000` в V; ток — `InstantAmperage` (fallback `Amperage`) `/ 1000` в A. Battery Power = `Voltage × Current` в W: плюс означает заряд аккумулятора, минус — разряд.
+- `Adapter Rated Power` (`AdapterDetails.Watts`) показывает возможность адаптера. `Adapter Input Power` (`PowerTelemetryData.SystemPowerIn / 1000`) показывает измеренный вход, если он доступен. Ни одно из них не является Battery Power или полной System/SoC power.
+- Charge/discharge rate строится по изменению процентов за интервал не менее 10 секунд и сглаживается EMA (α=0.2). Remaining использует доступную mAh × V / |Battery Power|; Time to Full использует сглаженный положительный rate, с fallback на системный `TimeRemaining`.
+- В памяти хранится bounded session history на 3 часа (не более 5400 samples): уровень, power, температура и rate. На экране доступны периоды 5/15/30 минут, 1/3 часа и Session с четырьмя лёгкими Swift Charts.
+- Battery Insights — консервативные правила: Battery Hot при температуре от 40 °C, High Energy Usage только после 3 устойчивых samples выше 1.75× rolling 5-minute baseline и не менее 8 W, Charging/Fully Charged по состоянию IOKit, иначе Normal или Calculating.
+- Top Energy Processes повторно использует существующий `ProcessMonitor` и тот же относительный MacPulse Energy Score. Utility sampler запускается, пока открыт Processes или Battery; отдельного process architecture нет.
+- Быстрые battery properties читаются каждые 2 секунды через централизованный `SamplingEngine`; static capacities и adapter fields обновляются тем же snapshot без дополнительных UI timers. Sleep/wake и недоступные значения безопасно дают `—`.
+
+На этом MacBook Air M1 runtime-проверка показала 65–66%, 3,418 mAh full charge, 2,126 mAh current, 4,382 mAh design, 620 cycles, 78% health, 31.6 °C, 11.54 V, −0.82 A и −9.4 W в режиме discharging. Ранее при подключённом адаптере ioreg дал +1.932 A, 12.39 V, +23.94 W Battery Power, 100 W rated adapter и 39.07 W measured input. Физически переключить зарядку из CUA не удалось; переход charging → discharging подтверждён независимыми ioreg/pmset snapshots, а charging UI остаётся условием для ручной проверки.
+
+Измерение собственного процесса MacPulse за 30 секунд сохранено в [`Evidence/battery-screen-usage.json`](Evidence/battery-screen-usage.json): Overview 9.607% one-core CPU / 120–121 MiB RSS, Battery screen 7.964% / 121→116 MiB RSS. Значения зависят от фоновой нагрузки Mac и не являются benchmark-порогом.

@@ -508,7 +508,8 @@ static NSDictionary *networkCounters(void) {
             @"AppleRawCurrentCapacity" : @"currentCapacity",
             @"AppleRawMaxCapacity" : @"maxCapacity",
             @"IsCharging" : @"charging",
-            @"ExternalConnected" : @"externalPower"
+            @"ExternalConnected" : @"externalPower",
+            @"FullyCharged" : @"fullyCharged"
         };
         for (NSString *key in mapping)
             if ([battery[key] isKindOfClass:NSNumber.class])
@@ -528,6 +529,19 @@ static NSDictionary *networkCounters(void) {
         if ([r[@"designCapacity"] doubleValue] > 0 && r[@"maxCapacity"])
             r[@"batteryHealth"] =
                 @(100 * [r[@"maxCapacity"] doubleValue] / [r[@"designCapacity"] doubleValue]);
+        NSDictionary *adapter = battery[@"AdapterDetails"];
+        if ([adapter isKindOfClass:NSDictionary.class]) {
+            NSNumber *watts = adapter[@"Watts"], *millivolts = adapter[@"AdapterVoltage"], *milliamps = adapter[@"Current"];
+            if (watts.doubleValue > 0) r[@"adapterRatedPower"] = watts;
+            if (millivolts.doubleValue > 0) r[@"adapterVoltage"] = @(millivolts.doubleValue / 1000.0);
+            if (milliamps.doubleValue > 0) r[@"adapterCurrent"] = @(milliamps.doubleValue / 1000.0);
+        }
+        NSDictionary *telemetry = battery[@"PowerTelemetryData"];
+        NSNumber *systemPowerIn = telemetry[@"SystemPowerIn"];
+        if (systemPowerIn.doubleValue > 0) r[@"adapterInputPower"] = @(systemPowerIn.doubleValue / 1000.0);
+        NSNumber *timeRemaining = battery[@"TimeRemaining"];
+        if (timeRemaining.doubleValue >= 0 && timeRemaining.doubleValue < 65535)
+            r[@"systemTimeRemainingMinutes"] = timeRemaining;
     }
     // Общие сведения о батарее читаем через публичный API; регистр дополняет деталями.
     CFTypeRef sourceInfo = IOPSCopyPowerSourcesInfo();

@@ -135,6 +135,8 @@ struct DashboardView: View {
             if page == .processes {
                 ProcessesView(monitor: processMonitor, preferences: preferences)
                     .background(Color(nsColor: .windowBackgroundColor))
+            } else if page == .battery {
+                BatteryView(engine: engine, processMonitor: processMonitor, preferences: preferences)
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {

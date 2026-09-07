@@ -4,7 +4,7 @@ import Foundation
 enum Metric: String, CaseIterable, Codable, Identifiable {
     case cpu, cpuTemperature, cpuPower, gpu, gpuTemperature, gpuPower, gpuMemory
     case memory, memoryUsed, memoryAvailable, memoryTotal, wired, compressed, cached, swap, swapTotal
-    case battery, batteryHealth, cycles, batteryTemperature, voltage, amperage, batteryPower, designCapacity, currentCapacity, maxCapacity
+    case battery, batteryHealth, cycles, batteryTemperature, voltage, amperage, batteryPower, estimatedRemaining, designCapacity, currentCapacity, maxCapacity
     case anePower, computePower, systemPower, packagePower, download, upload, wifiSignal, wifiNoise, wifiLink
     case storage, storageTotal, storageUsed, storageAvailable, diskRead, diskWrite
     var id: String { rawValue }
@@ -19,6 +19,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         case .memory, .memoryUsed, .memoryAvailable, .memoryTotal, .wired, .compressed, .cached, .swap, .swapTotal: "memorychip"
         case .battery, .batteryHealth, .cycles, .designCapacity, .currentCapacity, .maxCapacity: "battery.75percent"
         case .anePower, .computePower, .systemPower, .packagePower, .batteryPower, .voltage, .amperage: "bolt"
+        case .estimatedRemaining: "hourglass"
         case .download: "arrow.down"; case .upload: "arrow.up"
         case .wifiSignal, .wifiNoise, .wifiLink: "wifi"
         default: "internaldrive"
@@ -31,7 +32,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         case .cpuPower, .gpuPower, .anePower, .computePower, .systemPower, .packagePower, .batteryPower: "W"
         case .download, .upload, .diskRead, .diskWrite: "B/s"
         case .wifiSignal, .wifiNoise: "dBm"; case .wifiLink: "Mbps"
-        case .voltage: "V"; case .amperage: "A"; case .cycles: "cycles"
+        case .voltage: "V"; case .amperage: "A"; case .estimatedRemaining: "h"; case .cycles: "cycles"
         case .designCapacity, .currentCapacity, .maxCapacity: "mAh"
         default: "bytes"
         }
@@ -63,7 +64,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         case .memory: "RAM"
         case .download: "↓"
         case .upload: "↑"
-        case .battery, .batteryPower, .batteryHealth: "BAT"
+        case .battery, .batteryPower, .batteryHealth, .estimatedRemaining: "BAT"
         case .cpuTemperature: ""
         case .systemPower: "SYS"
         case .anePower: "ANE"
@@ -87,7 +88,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         if unit == "%" || unit == "°C" { return number + unit }
         return number + (compact ? "" : " ") + unit
     }
-    static let menuChoices: [Metric] = [.cpu, .cpuTemperature, .gpu, .memory, .battery, .download, .upload, .cpuPower, .gpuPower, .batteryPower, .systemPower, .anePower, .computePower, .storage]
+    static let menuChoices: [Metric] = [.cpu, .cpuTemperature, .gpu, .memory, .battery, .batteryTemperature, .download, .upload, .cpuPower, .gpuPower, .batteryPower, .estimatedRemaining, .systemPower, .anePower, .computePower, .storage]
 }
 
 struct Volume: Codable, Identifiable { var name: String; var total: Double; var available: Double; var id: String { name } }
@@ -118,8 +119,11 @@ struct Snapshot: Codable {
         switch Int(values["pressure"] ?? -1) { case 1: L10n.text("status.normal"); case 2: L10n.text("status.warning"); case 4: L10n.text("status.critical"); default: L10n.text("Unavailable") }
     }
     var batteryState: String {
-        guard let charging = values["charging"], let external = values["externalPower"] else { return L10n.text("Unavailable") }
-        return charging == 1 ? L10n.text("status.charging") : external == 1 ? L10n.text("status.externalPower") : L10n.text("status.discharging")
+        guard let external = values["externalPower"] else { return L10n.text("Unavailable") }
+        if values["fullyCharged"] == 1 || (external == 1 && values["battery"] ?? 0 >= 99 && values["charging"] != 1) { return L10n.text("status.fullyCharged") }
+        if values["charging"] == 1 { return L10n.text("status.charging") }
+        if external == 1 { return L10n.text("status.notCharging") }
+        return L10n.text("status.discharging")
     }
 }
 

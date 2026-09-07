@@ -67,3 +67,38 @@ The earlier missing-team diagnosis is superseded: Personal Team is now selected 
 - Независимая сверка с `top` для самого приложения: PID 72705, RSS 80 MB, 1.7% one-core CPU в момент снимка; UI sampler продолжал обновляться. Отдельное измерение процесса MacPulse за 30 секунд показало 2.896% one-core CPU и 116.73 MiB RSS при закрытом Processes против 6.992% и 140.94 MiB при открытом Processes; данные сохранены в [Evidence/process-screen-usage.json](../Evidence/process-screen-usage.json). Полный XCTest: 11 tests, 0 failures.
 
 Ограничение: при одновременном live-перестроении списка отдельные AX element ID могут устареть между снимками; координатный клик позволил завершить проверку detail panel. WidgetKit/signing к этому follow-up не относятся и намеренно не менялись.
+
+## Battery Intelligence follow-up, 2026-09-07
+
+Экран Battery переработан вокруг существующего `MPNativeSensors → SensorWorker → SamplingEngine` потока. Новый `BatteryIntelligence` отделяет acquisition, raw snapshot, расчёты, bounded session history и SwiftUI. UI не читает IOKit и не создаёт отдельные timers. Для Top Energy Processes повторно используется существующий `ProcessMonitor` и MacPulse Energy Score; второй process sampler не добавлен.
+
+### Реальные источники и единицы
+
+- IOKit Power Sources даёт текущий процент, `IsCharging`, `ExternalConnected` и состояние fully charged.
+- `AppleSmartBattery` даёт `AppleRawCurrentCapacity`, `AppleRawMaxCapacity`, `DesignCapacity`, `CycleCount`, `Temperature`, `Voltage`, `InstantAmperage`. На этом Apple Silicon значения проверены против `ioreg`: capacity — mAh; temperature — centi-°C; voltage — mV; amperage — mA.
+- Battery Power — `voltage(V) × current(A)`, со знаком тока из AppleSmartBattery: positive = charge, negative = discharge. Это поток батареи, не adapter input и не total System/SoC power.
+- `AdapterDetails.Watts` — rated capability; `AdapterVoltage`/`Current` — negotiated adapter fields; `PowerTelemetryData.SystemPowerIn` — measured input when available. Они отображаются отдельно и не складываются с Battery Power.
+
+### Формулы и правила
+
+Health считается только как `Full Charge Capacity / Design Capacity × 100` с проверкой конечности и положительных единиц. Rate требует интервал не менее 10 секунд и затем сглаживается EMA α=0.2. Remaining оценивает `currentCapacity(mAh) × voltage(V) / 1000 / abs(power(W))`, только при устойчивом discharge power; Time to Full использует `(100 − level) / positiveRate` и системный `TimeRemaining` как fallback. Значения ограничены физически разумными пределами, а недостаток samples показывает `Calculating…`/`Расчёт…`.
+
+High Energy Usage не использует универсальный порог: baseline — rolling среднее абсолютного discharge power за 5 минут, тревога требует минимум 3 sustained samples и `abs(power) >= max(8 W, baseline × 1.75)`. Battery Hot — температура ≥40 °C. Charging, Fully Charged и Normal выбираются по состоянию источника и этим правилам. Отсутствующие, отрицательные для unsigned-полей, NaN/Inf и нулевые значения не превращаются в fake data.
+
+### UI, charts, localization
+
+Добавлены current hero, Battery Health, Live Energy, adapter distinction, 5/15/30 min, 1/3 h и Session selectors, charts Battery Level (0–100%), Power (W), Temperature (°C), Charge Rate (%/h), Top Energy Processes и Battery Insights. Все строки добавлены в `Localizable.xcstrings` на English и естественном русском; единицы `W`, `V`, `A`, `mAh`, `%`, `°C` не переводятся.
+
+### Runtime evidence
+
+Собран и запущен Debug на MacBook Air M1. `pmset -g batt` во время проверки: 65–66%, discharging, 2:00–2:09 remaining. Одновременный `ioreg` snapshot: 4,382 mAh design, 3,417–3,418 mAh full charge, 2,126 mAh current, 620 cycles, 31.57 °C, 11.477–11.544 V, signed current примерно −0.82…−1.08 A, Battery Power −9.4…−12.4 W; MacPulse UI показал те же нормализованные значения и health 78%. После накопления process samples Battery screen показал реальные процессы: Notification Center (score 4), World of Tanks Blitz (4), FigmaAgent (3), ChatGPT Computer Use (3), Codex (1). Rate оставался `—`, поскольку integer battery level не изменился в коротком окне; это корректное insufficient-samples состояние, а не placeholder.
+
+Независимый AC snapshot ранее показал 64%, charging, `Voltage=12.390 V`, `InstantAmperage=+1.932 A`, Battery Power ≈+23.94 W, adapter rated 100 W и SystemPowerIn ≈39.07 W. Физически подключить/отключить адаптер через CUA не удалось, поэтому charging UI transition, charge rate и Time to Full на живом AC переходе не объявляются проверенными; provider sign/units подтверждены этими реальными ioreg properties.
+
+### Tests и performance
+
+`DEVELOPER_DIR=/Applications/work/Xcode.app/Contents/Developer ./Scripts/build.sh test` завершён: **15 tests, 0 failures**. Новые unit tests покрывают capacity health, mAh/mV/mA conversions, signed watts, rate, smoothing, ETA, insufficient/invalid samples, baseline detection и history bound. Debug build собрал app и Widget extension с локальной ad-hoc подписью (`Sign to Run Locally`).
+
+30-секундное измерение процесса MacPulse сохранено в [Evidence/battery-screen-usage.json](../Evidence/battery-screen-usage.json): Battery screen closed (Overview) — 9.607% one-core CPU, 120.44→121.08 MiB RSS; Battery screen open — 7.964%, 121.22→115.80 MiB RSS. Session history bounded 5400 samples/3 hours; unbounded growth не обнаружен в unit test.
+
+Оставшиеся ограничения: charging transition требует физического адаптера; WidgetKit App Group по-прежнему требует исправной developer signing identity и не относится к Battery Intelligence; private AppleSmartBattery registry semantics изолированы в Objective-C bridge и безопасно дают unavailable при изменении macOS.

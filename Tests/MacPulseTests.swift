@@ -128,4 +128,46 @@ final class MacPulseTests: XCTestCase {
         XCTAssertEqual(ProcessSort.energy.titleKey, "Energy Score")
         XCTAssertEqual(ProcessSort.disk.titleKey, "Disk I/O")
     }
+
+    func testBatteryCapacityHealthAndUnitConversions() {
+        XCTAssertEqual(BatteryMath.capacityHealth(fullCharge: 3418, design: 4382)!, 78.0009, accuracy: 0.01)
+        XCTAssertNil(BatteryMath.capacityHealth(fullCharge: 0, design: 4382))
+        XCTAssertEqual(BatteryMath.watts(voltage: 12.39, current: 1.932)!, 23.935, accuracy: 0.01)
+        XCTAssertEqual(BatteryMath.watts(voltage: 12.39, current: -1.932)!, -23.935, accuracy: 0.01)
+        XCTAssertNil(BatteryMath.watts(voltage: 0, current: 1))
+    }
+
+    func testBatteryRatesSmoothingAndETA() {
+        XCTAssertEqual(BatteryMath.percentRatePerHour(oldLevel: 60, newLevel: 61, elapsed: 60)!, 60, accuracy: 0.001)
+        XCTAssertEqual(BatteryMath.percentRatePerHour(oldLevel: 61, newLevel: 60, elapsed: 60)!, -60, accuracy: 0.001)
+        XCTAssertNil(BatteryMath.percentRatePerHour(oldLevel: 60, newLevel: 61, elapsed: 2))
+        XCTAssertEqual(BatteryMath.smooth(previous: 10, next: 20, alpha: 0.2), 12, accuracy: 0.001)
+        XCTAssertEqual(BatteryMath.remainingHours(availableCapacityMilliampHours: 2000, voltage: 12, powerWatts: -6)!, 4, accuracy: 0.001)
+        XCTAssertEqual(BatteryMath.timeToFullHours(level: 60, chargeRatePercentPerHour: 30)!, 1.3333, accuracy: 0.001)
+        XCTAssertNil(BatteryMath.timeToFullHours(level: 60, chargeRatePercentPerHour: nil))
+    }
+
+    func testBatteryBaselineAndInvalidSamples() {
+        XCTAssertFalse(BatteryMath.highEnergy(powerWatts: -12, baselineWatts: 8, sustainedSamples: 2))
+        XCTAssertTrue(BatteryMath.highEnergy(powerWatts: -16, baselineWatts: 8, sustainedSamples: 3))
+        XCTAssertFalse(BatteryMath.highEnergy(powerWatts: .nan, baselineWatts: 8, sustainedSamples: 3))
+        XCTAssertNil(BatteryMath.average([]))
+        XCTAssertEqual(BatteryMath.average([2, 4, 6])!, 4, accuracy: 0.001)
+    }
+
+    @MainActor func testBatteryHistoryIsBoundedAndStateIsDerived() {
+        let intelligence = BatteryIntelligence(historyLimit: 4)
+        let start = Date()
+        for i in 0..<8 {
+            intelligence.ingest(Snapshot(date: start.addingTimeInterval(Double(i * 30)), values: [
+                "battery": 70 - Double(i), "currentCapacity": 2500, "maxCapacity": 3400,
+                "designCapacity": 4400, "voltage": 12, "amperage": -1, "batteryPower": -12,
+                "externalPower": 0, "charging": 0, "batteryTemperature": 30
+            ]))
+        }
+        XCTAssertEqual(intelligence.history.count, 4)
+        XCTAssertEqual(intelligence.state, .discharging)
+        XCTAssertEqual(intelligence.health!, 77.2727, accuracy: 0.01)
+        XCTAssertEqual(intelligence.estimatedRemainingHours!, 2.5, accuracy: 0.001)
+    }
 }

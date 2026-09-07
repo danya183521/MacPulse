@@ -28,6 +28,7 @@ final class SensorWorker: @unchecked Sendable {
     @Published private(set) var widgetStatus = L10n.text("Waiting for first snapshot")
     @Published private(set) var samplingMilliseconds = 0.0
     @Published private(set) var paused = false
+    let batteryIntelligence = BatteryIntelligence()
     let alerts = AlertEngine()
     private let worker = SensorWorker()
     private let widgetQueue = DispatchQueue(label: "local.macpulse.widget", qos: .utility)
@@ -66,13 +67,16 @@ final class SensorWorker: @unchecked Sendable {
         timer.resume()
     }
     private func receive(_ value: Snapshot, duration: Double) {
-        snapshot = value
+        batteryIntelligence.ingest(value)
+        var enriched = value
+        if let remaining = batteryIntelligence.estimatedRemainingHours { enriched.values[Metric.estimatedRemaining.rawValue] = remaining }
+        snapshot = enriched
         samplingMilliseconds = duration
-        history.append(value)
-        alerts.evaluate(value, preferences: preferences)
-        if value.date.timeIntervalSince(lastWidgetWrite) >= 60 {
-            let widget = WidgetSnapshot(date: value.date, cpu: value[.cpu], memory: value[.memory], battery: value[.battery], temperature: value[.cpuTemperature])
-            lastWidgetWrite = value.date
+        history.append(enriched)
+        alerts.evaluate(enriched, preferences: preferences)
+        if enriched.date.timeIntervalSince(lastWidgetWrite) >= 60 {
+            let widget = WidgetSnapshot(date: enriched.date, cpu: enriched[.cpu], memory: enriched[.memory], battery: enriched[.battery], temperature: enriched[.cpuTemperature])
+            lastWidgetWrite = enriched.date
             if WidgetSnapshot.isConfigured {
                 widgetQueue.async { [weak self] in
                     let message: String
@@ -82,7 +86,7 @@ final class SensorWorker: @unchecked Sendable {
                 }
             } else { widgetStatus = L10n.text("Developer signing required for shared widget data") }
         }
-        if WidgetSnapshot.isConfigured && value.date.timeIntervalSince(lastWidgetReload) >= 900 {
+        if WidgetSnapshot.isConfigured && enriched.date.timeIntervalSince(lastWidgetReload) >= 900 {
             WidgetCenter.shared.reloadTimelines(ofKind: "MacPulseWidget")
             lastWidgetReload = value.date
         }
