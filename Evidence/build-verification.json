@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-09-07T17:29:12+0200",
+  "configuration": "Debug, arm64, local ad-hoc signing",
+  "cleanBuild": "passed",
+  "tests": {
+    "executed": 9,
+    "failures": 0,
+    "result": "passed"
+  },
+  "runningExecutable": "build/Build/Products/Debug/MacPulse.app/Contents/MacOS/MacPulse",
+  "widgetExtension": "compiled, real App Group runtime blocked by missing Apple Development identity/team",
+  "warnings": [
+    "Embedded extension binary is signed and therefore not stripped in Debug."
+  ],
+  "uiVerified": [
+    "Overview live metrics and growing history on final executable",
+    "Earlier successful Light/Dark, settings persistence, panel and native status item checks"
+  ],
+  "uiOpen": [
+    "Final panel sizing and detail pages: CUA pipe error",
+    "Background-only resources",
+    "Actual WidgetKit shared snapshot"
+  ],
+  "rawLogs": [
+    "Evidence/debug-build.log",
+    "Evidence/tests.log",
+    "Evidence/widget-signing-blocker.log"
+  ]
+}

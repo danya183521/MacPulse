@@ -1,0 +1,9 @@
+{
+  "pid": 55769,
+  "seconds": 30.028,
+  "cpu_seconds": 1.74,
+  "one_core_cpu_percent": 5.795,
+  "rss_start_MiB": 123.52,
+  "rss_end_MiB": 136.83,
+  "context": "Final Debug, dashboard open, 2s interval; UI action verification interrupted by CUA pipe error"
+}

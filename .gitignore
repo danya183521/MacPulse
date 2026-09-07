@@ -1,0 +1,12 @@
+.DS_Store
+build/
+.research/
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.xcresult
+Evidence/*.jsonl
+Evidence/*.png
+Evidence/*.log
+Evidence/app-sample*.txt
+Evidence/energy-audit.txt

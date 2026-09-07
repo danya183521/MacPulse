@@ -1,0 +1,66 @@
+{
+  "phases": [
+    [
+      "cpu-start",
+      5.003585834
+    ],
+    [
+      "cpu-end",
+      13.051947250000001
+    ],
+    [
+      "gpu-start",
+      18.054790917
+    ],
+    [
+      "gpu-end",
+      26.685903334
+    ]
+  ],
+  "windows": {
+    "idle": {
+      "cpu": 24.656,
+      "gpu": 36,
+      "cpuTemperature": 51.405,
+      "gpuTemperature": 30,
+      "cpuPower": 0.785,
+      "gpuPower": 0.21,
+      "systemPower": 7.468,
+      "packagePower": 2.558,
+      "batteryPower": -6.118
+    },
+    "cpu load": {
+      "cpu": 70.485,
+      "gpu": 27.8,
+      "cpuTemperature": 67.731,
+      "gpuTemperature": 30,
+      "cpuPower": 10.802,
+      "gpuPower": 0.223,
+      "systemPower": 17.874,
+      "packagePower": 14.892,
+      "batteryPower": -5.681
+    },
+    "recovery": {
+      "cpu": 31.857,
+      "gpu": 25.5,
+      "cpuTemperature": 62.161,
+      "gpuTemperature": 30,
+      "cpuPower": 1.536,
+      "gpuPower": 0.19,
+      "systemPower": 7.452,
+      "packagePower": 2.747,
+      "batteryPower": -5.681
+    },
+    "gpu load": {
+      "cpu": 22.964,
+      "gpu": 90.2,
+      "cpuTemperature": 55.185,
+      "gpuTemperature": 56.659,
+      "cpuPower": 0.561,
+      "gpuPower": 5.209,
+      "systemPower": 10.53,
+      "packagePower": 7.4,
+      "batteryPower": -5.681
+    }
+  }
+}

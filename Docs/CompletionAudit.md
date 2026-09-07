@@ -1,0 +1,44 @@
+# Completion audit
+
+Полная цель: [Goal.md](Goal.md). **Цель пока не выполнена полностью.** Наличие build, исходного кода и unit tests не подменяет отсутствующую runtime-проверку WidgetKit.
+
+Состояние на 7 сентября 2026 после финальных build/test и запуска Debug. Краткое подтверждение сборки: `Evidence/build-verification.json`.
+
+| № | Критерий | Доказательство / состояние |
+|---:|---|---|
+| 1 | Настоящий Xcode project | MacPulse.xcodeproj; targets MacPulse, MacPulseWidget, MacPulseTests. Подтверждено сборкой. |
+| 2 | Debug build | `Evidence/debug-build.log`, BUILD SUCCEEDED. Финальный `clean build` успешен; 9 tests / 0 failures. |
+| 3 | Реальный запуск | Процесс MacPulse из build/Build/Products/Debug/MacPulse.app; работающий Dashboard наблюдался через CUA. |
+| 4 | Menu Bar существует и обновляется | Нативный NSStatusItem; `testNativeStatusItemReceivesLiveSamples` проверил visibility, window width, реальные CPU readings и реакцию title на смену выбора. Панель была открыта через штатную команду ⇧⌘M. Прямой физический клик по самому пункту отдельно не зафиксирован. |
+| 5 | Выбор и сохранение | Через Settings включена температура, изменён порядок; после quit/relaunch выбор и порядок сохранились. Unit test подтверждает также пустой выбор, интервал и тему. Overflow +N наблюдался в preview. |
+| 6 | Menu Bar panel | Реальный NSPopover показал CPU/RAM/network/temperature/battery/power/GPU/storage; переход в Settings проверен. Последняя правка высоты и освобождения hosting controller требует повторной UI-проверки. |
+| 7 | Dashboard | Overview, реальные значения и растущие графики проверены в Light/Dark; на финальной сборке AX повторно показал новые значения и увеличение истории с 3 до 11 samples. Все подробные страницы созданы; повторный последовательный UI-аудит прерван ошибкой CUA native pipe. Не считать все страницы отдельно проверенными. |
+| 8 | Settings | Menu Bar controls, порядок, theme, General, persistence проверены. Launch at Login и доставка notifications не активировались без разрешения. |
+| 9 | WidgetKit | Extension компилируется; payload round-trip на реальных данных прошёл. **BLOCKED:** signing identities = 0; Signed Debug требует Development Team для обоих targets. App Group и реальное отображение в WidgetKit не подтверждены. |
+| 10 | Реальная CPU нагрузка | Native collector, XCTest, CPU workload 24.7% → 70.5%, изменение графика в Dashboard. |
+| 11 | Реальная память | Mach collector; physical bytes совпадают с sysctl; used сверяется с vm_stat formula. |
+| 12 | Реальная батарея | IOKit + pmset; percentage/state совпадают; charge и discharge наблюдались. Остальные values из реального registry. |
+| 13 | Сетевой трафик | Реальные download/upload служебных данных, curl exit 0, counters выросли; Evidence/network-check.json. Итоговые 64-битные IFMIB counters также попали между независимыми чтениями netstat: Evidence/network-counter-comparison.json. |
+| 14 | Storage | Foundation total/free сверены с df; физические read/write counters доступны. |
+| 15 | System | sysctl model/chip/memory/core count совпали; OS и uptime читаются системно. |
+| 16 | Temperature/GPU/Power | IOHID, IOAccelerator, IOReport Energy Model + PMP ANE, read-only AppleSMC. CPU/Metal/CoreML нагрузки проверены. PHPC mapping оставлен experimental; wall power не заявлен. |
+| 17 | Нет fake production values | Missing = nil/—; тесты используют отдельные сценарии. Ни GPU 30°C floor, ни ANE 0 W не подставлены: получены от источника и меняются под нагрузкой. |
+| 18 | История и Charts | Растущие реальные CPU/memory графики в UI, bounded history test. Остальные графики реализованы; все подробные страницы ещё не проверены через UI. |
+| 19 | Unavailable / network state | Nil formatting, collector reset и synthetic interface transitions проверены runtime tests. Физическое отключение сети / sleep не проводилось. Нулевой ответ sensor не подменяется fake data. |
+| 20 | Собственная нагрузка | Финальная Debug: 5.80% одного ядра (около 0.72% восьми ядер), RSS 123.52 → 136.83 MiB за 30 s. Physical footprint отдельной выборки 56.8 MiB. Background-only и длительный battery benchmark ещё не подтверждены. |
+| 21 | Основные runtime-сценарии | Live sampling, реальные нагрузки, persistence, Overview, panel/settings и native status item проверены. Widget и полный проход детальных страниц остаются открытыми. |
+| 22 | Документация | README: архитектура, все типы источников, private ABI, история, privacy, widgets, ограничения и команды. |
+| 23 | Локальный git commit, clean, no remote | Локальный repository на main; рабочая версия закоммичена, финальный git status clean, remote отсутствует. Push не выполнялся. |
+
+## Объективные внешние ограничения
+
+1. **Developer signing:** `security find-identity -v -p codesigning` → 0 valid identities. `Evidence/widget-signing-blocker.log` → оба targets требуют development team. Пользователю направлен запрос добавить свою команду в Xcode Accounts. Пароли/сертификаты не запрашиваются в чате. Установка signing, разрешённой App Group и реальный widget runtime остаются обязательными для полной цели.
+2. **CUA transport:** после успешных проверок Overview / panel / settings инструмент начал возвращать `Sky Computer Use native pipe closed before response`. После перезапуска финального приложения чтение Overview восстановилось, но на действии выбора CPU снова оборвался pipe. js_reset не помог. MacPulse продолжает работать; sample показывает обычный run loop, а не блокировку главного потока. Это ограничение проверки UI, а не доказательство неисправности приложения. Оно не обходится сторонней UI-автоматизацией.
+
+## Следующие проверки после снятия ограничений
+
+- Открыть каждый detail-раздел, 5/15/30-minute history, panel → Dashboard и panel → Settings, пустой и переполненный Menu Bar, финальные Light/Dark screenshots.
+- Проверить два размера реального WidgetKit widget, timestamp, устаревание и обновление из App Group.
+- Проверить background-only CPU/RSS на финальном executable.
+- При разрешении пользователя — настоящий login registration, notification delivery, sleep/wake и физический network-state change; зафиксировать отдельно от unit tests.
+- После исправлений повторить соответствующие build/test/runtime проверки и обновить этот аудит. Не отмечать goal complete при оставшихся неподтверждённых критериях.
