@@ -42,3 +42,7 @@
 - Проверить background-only CPU/RSS на финальном executable.
 - При разрешении пользователя — настоящий login registration, notification delivery, sleep/wake и физический network-state change; зафиксировать отдельно от unit tests.
 - После исправлений повторить соответствующие build/test/runtime проверки и обновить этот аудит. Не отмечать goal complete при оставшихся неподтверждённых критериях.
+
+## Local signing follow-up, 2026-09-07
+
+The earlier missing-team diagnosis is superseded: Personal Team is now selected for both Signed Debug targets. Xcode shows two certificates with Missing Private Key, zero valid local identities, and an automatic signing error: `The user name or passphrase you entered is not correct.` Paid membership has NOT been established as necessary. Widget runtime remains unverified. See [LocalSigning.md](LocalSigning.md) for evidence and the manual certificate step.
