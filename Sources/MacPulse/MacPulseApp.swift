@@ -4,16 +4,19 @@ import AppKit
 @main struct MacPulseApp: App {
     @StateObject private var preferences: Preferences
     @StateObject private var engine: SamplingEngine
+    @StateObject private var processMonitor: ProcessMonitor
     @StateObject private var status: StatusBarController
     init() {
         let preferences = Preferences()
         _preferences = StateObject(wrappedValue: preferences)
         let engine = SamplingEngine(preferences: preferences)
         _engine = StateObject(wrappedValue: engine)
+        let processMonitor = ProcessMonitor()
+        _processMonitor = StateObject(wrappedValue: processMonitor)
         _status = StateObject(wrappedValue: StatusBarController(engine: engine, preferences: preferences))
     }
     var body: some Scene {
-        Window("MacPulse", id: "dashboard") { DashboardContainer(engine: engine, preferences: preferences, status: status) }
+        Window("MacPulse", id: "dashboard") { DashboardContainer(engine: engine, preferences: preferences, processMonitor: processMonitor, status: status) }
             .defaultSize(width: 1100, height: 780)
             .commands {
                 CommandGroup(after: .windowArrangement) {
@@ -26,11 +29,12 @@ import AppKit
 private struct DashboardContainer: View {
     @ObservedObject var engine: SamplingEngine
     @ObservedObject var preferences: Preferences
+    @ObservedObject var processMonitor: ProcessMonitor
     let status: StatusBarController
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openSettings) private var openSettings
     var body: some View {
-        DashboardView(engine: engine, preferences: preferences).onAppear {
+        DashboardView(engine: engine, preferences: preferences, processMonitor: processMonitor).onAppear {
             status.openDashboard = { NSApp.activate(ignoringOtherApps: true); openWindow(id: "dashboard") }
             status.openSettings = { NSApp.activate(ignoringOtherApps: true); openSettings() }
         }

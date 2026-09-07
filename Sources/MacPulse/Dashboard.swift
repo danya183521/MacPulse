@@ -3,11 +3,11 @@ import Charts
 
 // Разделы описывают навигацию, не обращаясь к системным API.
 enum SectionPage: String, CaseIterable, Identifiable {
-    case overview = "Overview", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", network = "Network", storage = "Storage", system = "System"
+    case overview = "Overview", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", network = "Network", storage = "Storage", system = "System", processes = "Processes"
     var id: String { rawValue }
     var displayName: String { L10n.text("page.\(rawValue)") }
     var symbol: String { switch self {
-        case .overview: "square.grid.2x2"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"
+        case .overview: "square.grid.2x2"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"; case .processes: "list.bullet.rectangle"
     } }
     var metrics: [Metric] { switch self {
         case .overview: [.cpu,.memory,.cpuTemperature,.battery,.download,.upload,.cpuPower,.storage]
@@ -20,6 +20,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
         case .network: [.download,.upload,.wifiSignal,.wifiNoise,.wifiLink]
         case .storage: [.storage,.storageAvailable,.storageUsed,.storageTotal,.diskRead,.diskWrite]
         case .system: []
+        case .processes: []
     } }
     var charts: [Metric] { switch self {
         case .overview: [.cpu,.memory]
@@ -32,6 +33,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
         case .network: [.download,.upload]
         case .storage: [.diskRead,.diskWrite]
         case .system: []
+        case .processes: []
     } }
     var subtitle: String { switch self {
         case .overview: L10n.text("subtitle.overview")
@@ -44,6 +46,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
         case .network: L10n.text("subtitle.network")
         case .storage: L10n.text("subtitle.storage")
         case .system: L10n.text("subtitle.system")
+        case .processes: L10n.text("subtitle.processes")
     } }
 }
 
@@ -111,6 +114,7 @@ struct MetricChart: View {
 struct DashboardView: View {
     @ObservedObject var engine: SamplingEngine
     @ObservedObject var preferences: Preferences
+    @ObservedObject var processMonitor: ProcessMonitor
     @State private var selection: SectionPage? = .overview
     @State private var historyMinutes = 5
     @Environment(\.openSettings) private var openSettings
@@ -128,28 +132,33 @@ struct DashboardView: View {
             }.navigationSplitViewColumnWidth(min: 175, ideal: 195, max: 225)
         } detail: {
             let page = selection ?? .overview
-            ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 6) { Text(page.displayName).font(.largeTitle.weight(.semibold)); Text(page.subtitle).foregroundStyle(.secondary) }
-                        Spacer()
-                        Text(engine.snapshot.date, style: .time).font(.caption).monospacedDigit().foregroundStyle(.secondary).padding(.top, 10)
-                    }
-                    if page == .overview { statusStrip }
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: page == .overview ? 170 : 210), spacing: 14)], spacing: 14) {
-                        ForEach(page.metrics) { MetricCard(metric: $0, snapshot: engine.snapshot) }
-                    }
-                    details(page)
-                    if !page.charts.isEmpty {
-                        HStack { Text(L10n.text("Recent history")).font(.title3.weight(.semibold)); Spacer(); Picker(L10n.text("History"), selection: $historyMinutes) { Text(L10n.text("5 min")).tag(5); Text(L10n.text("15 min")).tag(15); Text(L10n.text("30 min")).tag(30) }.pickerStyle(.segmented).frame(width: 230) }
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 14)], spacing: 14) {
-                            ForEach(page.charts) { MetricChart(metric: $0, points: chartPoints) }
+            if page == .processes {
+                ProcessesView(monitor: processMonitor, preferences: preferences)
+                    .background(Color(nsColor: .windowBackgroundColor))
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 22) {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: 6) { Text(page.displayName).font(.largeTitle.weight(.semibold)); Text(page.subtitle).foregroundStyle(.secondary) }
+                            Spacer()
+                            Text(engine.snapshot.date, style: .time).font(.caption).monospacedDigit().foregroundStyle(.secondary).padding(.top, 10)
                         }
-                        Text(L10n.text("This session · up to 900 samples / 30 minutes · gaps remain visible")).font(.caption).foregroundStyle(.secondary)
-                    }
-                    if page != .overview && page != .system { sourceDetails(page) }
-                }.padding(28).frame(maxWidth: 1250, alignment: .leading).frame(maxWidth: .infinity)
-            }.background(Color(nsColor: .windowBackgroundColor))
+                        if page == .overview { statusStrip }
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: page == .overview ? 170 : 210), spacing: 14)], spacing: 14) {
+                            ForEach(page.metrics) { MetricCard(metric: $0, snapshot: engine.snapshot) }
+                        }
+                        details(page)
+                        if !page.charts.isEmpty {
+                            HStack { Text(L10n.text("Recent history")).font(.title3.weight(.semibold)); Spacer(); Picker(L10n.text("History"), selection: $historyMinutes) { Text(L10n.text("5 min")).tag(5); Text(L10n.text("15 min")).tag(15); Text(L10n.text("30 min")).tag(30) }.pickerStyle(.segmented).frame(width: 230) }
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 14)], spacing: 14) {
+                                ForEach(page.charts) { MetricChart(metric: $0, points: chartPoints) }
+                            }
+                            Text(L10n.text("This session · up to 900 samples / 30 minutes · gaps remain visible")).font(.caption).foregroundStyle(.secondary)
+                        }
+                        if page != .overview && page != .system { sourceDetails(page) }
+                    }.padding(28).frame(maxWidth: 1250, alignment: .leading).frame(maxWidth: .infinity)
+                }.background(Color(nsColor: .windowBackgroundColor))
+            }
         }
         .toolbar { ToolbarItem { Button { openSettings() } label: { Image(systemName: "gearshape") }.help("Settings").accessibilityIdentifier("open-settings") } }
         .frame(minWidth: 860, minHeight: 620)

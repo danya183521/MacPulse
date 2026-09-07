@@ -38,6 +38,16 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer ./Scripts/build.sh
 
 Launch at Login использует `SMAppService.mainApp`. Он не включается автоматически и может потребовать подтверждения в системных Login Items. Этот сценарий не проверялся фактическим входом в macOS: системные настройки без разрешения не менялись.
 
+## Процессы
+
+Раздел Processes использует `proc_listallpids`, `proc_pidinfo` (`PROC_PIDTBSDINFO` и `PROC_PIDTASKINFO`) и `proc_pid_rusage` (`RUSAGE_INFO_V4`). CPU считается по дельте user/system time между снимками; 100% означает одно занятое логическое ядро, поэтому процесс может показывать больше 100%. Для Memory используется `phys_footprint`, с fallback на resident size, если macOS его не возвращает. Disk I/O — дельты `ri_diskio_bytesread` и `ri_diskio_byteswritten`.
+
+Energy в Processes — честный **MacPulse Energy Score**, а не официальный Apple Energy Impact. Он рассчитывается из CPU (70%), частоты wakeups (20%) и Disk I/O (10%) с ограничением 0–100. Публичного надёжного per-process network accounting для обычного приложения macOS не предоставляет, поэтому Network показывает unavailable без синтетических значений.
+
+Сбор запускается одним utility timer только при открытом Processes и по умолчанию выполняется каждые 2 секунды. Иконки приложений кешируются; список поддерживает поиск по имени/PID, фильтр All Processes/User Processes, сортировку и Top 20/50/All. Модуль read-only и не управляет процессами.
+
+Измерение накладных расходов sampler при закрытом и открытом Processes сохранено в [`Evidence/process-screen-usage.json`](Evidence/process-screen-usage.json).
+
 ## Архитектура
 
 ```text

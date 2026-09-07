@@ -43,6 +43,17 @@ struct SettingsView: View {
                 Text("2 seconds is a balanced default. Static information and Wi-Fi refresh every 15 samples. Sampling pauses during sleep.").font(.caption).foregroundStyle(.secondary)
             }
             Section("Appearance") { Picker("Theme", selection: $preferences.appearance) { ForEach(["System","Light","Dark"], id: \.self) { Text(L10n.text($0)).tag($0) } } }
+            Section("Processes") {
+                Picker("Process update every", selection: $preferences.processInterval) {
+                    ForEach([1.0, 2.0, 5.0, 10.0], id: \.self) { Text(L10n.format("%d seconds", Int($0))).tag($0) }
+                }
+                Picker("Top processes", selection: $preferences.processTopLimit) {
+                    Text(L10n.text("Top 20")).tag(20)
+                    Text(L10n.text("Top 50")).tag(50)
+                    Text(L10n.text("All")).tag(0)
+                }
+                Toggle("Show system processes by default", isOn: $preferences.showSystemProcesses)
+            }
             Section("Language") {
                 Text(L10n.text("MacPulse follows the per-app language selected in macOS System Settings."))
                 Text(L10n.format("Current language: %@", Locale.current.localizedString(forLanguageCode: Locale.current.language.languageCode?.identifier ?? "en") ?? "English")).font(.caption).foregroundStyle(.secondary)

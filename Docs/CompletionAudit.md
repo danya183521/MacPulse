@@ -51,3 +51,19 @@ The earlier missing-team diagnosis is superseded: Personal Team is now selected 
 ## Localization follow-up, 2026-09-07
 
 `Localizable.xcstrings` содержит английский исходный язык и русский перевод всех извлечённых пользовательских строк: Dashboard, detail pages, Menu Bar, Quick Panel, Settings, alerts, statuses, accessibility и WidgetKit. Форматирование чисел и дат использует `Locale.current`; технические обозначения и единицы сохраняются компактными. Смена языка выполняется через per-app language в системных настройках macOS, после чего приложение нужно перезапустить. Build и 9 XCTest прошли после подключения каталога.
+
+## Processes follow-up, 2026-09-07
+
+Добавлен отдельный раздел **Processes** с одним централизованным utility-sampler, который работает только пока открыт экран процессов и обновляется по умолчанию раз в 2 секунды. Список строится через `proc_listallpids`, `proc_pidinfo` (`PROC_PIDTBSDINFO` и `PROC_PIDTASKINFO`) и `proc_pid_rusage(RUSAGE_INFO_V4)`; `ps`/`top` не используются в production-коде.
+
+- CPU считается по дельте user/system nanoseconds между снимками: 100% означает одно занятое логическое ядро, значения выше 100% допустимы.
+- Память — `ri_phys_footprint`, с fallback на resident size из `proc_taskinfo`.
+- Disk read/write — реальные дельты `ri_diskio_bytesread`/`ri_diskio_byteswritten` в байтах в секунду.
+- Per-process network accounting явно помечен unavailable: публичного API для этих счётчиков нет, синтетические значения не показываются.
+- Energy Score — прозрачный относительный MacPulse score из CPU, wakeups и disk activity; он не называется официальным Apple Energy Impact.
+- UI поддерживает All/User Processes, поиск по имени и PID, сортировку по CPU/Memory/Energy/Network/Disk/Process, ограничение Top processes и detail panel с bundle/executable/parent PID/threads и историей CPU/Memory.
+- Settings сохраняет интервал 1/2/5/10 секунд, Top processes 20/50/All и default scope системных процессов. Данные доступны только для чтения: kill/suspend/renice отсутствуют.
+- Runtime на этом Mac показал 20 живых процессов с PID, реальным footprint и disk rates; контролируемая нагрузка `macpulse-process-load` (PID 72969) отображалась как 258 MB, Energy Score 10–11 и до 1.78 GB/s disk write. Английская и русская версии, поиск (4 совпадения для `MacPulse`), фильтр User/All и меню сортировки проверены через AX. Detail panel был открыт на `WidgetsExtension` и показал CPU, footprint, Energy Score, disk, PID, executable, parent PID, threads и CPU/Memory history. Опрос занимал 12.9–34.4 ms.
+- Независимая сверка с `top` для самого приложения: PID 72705, RSS 80 MB, 1.7% one-core CPU в момент снимка; UI sampler продолжал обновляться. Отдельное измерение процесса MacPulse за 30 секунд показало 2.896% one-core CPU и 116.73 MiB RSS при закрытом Processes против 6.992% и 140.94 MiB при открытом Processes; данные сохранены в [Evidence/process-screen-usage.json](../Evidence/process-screen-usage.json). Полный XCTest: 11 tests, 0 failures.
+
+Ограничение: при одновременном live-перестроении списка отдельные AX element ID могут устареть между снимками; координатный клик позволил завершить проверку detail panel. WidgetKit/signing к этому follow-up не относятся и намеренно не менялись.

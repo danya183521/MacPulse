@@ -105,4 +105,27 @@ final class MacPulseTests: XCTestCase {
         for value in second.sensors.values { XCTAssertTrue((0...150).contains(value)) }
         worker.reset(); let reset = worker.sample(); XCTAssertNil(reset[.cpu]); XCTAssertNil(reset[.download])
     }
+
+    func testProcessSamplerEnumeratesCurrentProcessAndKeepsNetworkUnavailable() throws {
+        let sampler = ProcessSampler()
+        let first = sampler.sample()
+        XCTAssertTrue(first.records.contains { $0.pid == getpid() })
+        XCTAssertFalse(first.records.isEmpty)
+        Thread.sleep(forTimeInterval: 1.1)
+        let second = sampler.sample()
+        let current = try XCTUnwrap(second.records.first { $0.pid == getpid() })
+        XCTAssertGreaterThan(current.memoryBytes ?? 0, 0)
+        XCTAssertNotNil(current.cpuPercent)
+        XCTAssertNil(current.networkDownload)
+        XCTAssertNil(current.networkUpload)
+        XCTAssertGreaterThanOrEqual(current.diskReadRate ?? 0, 0)
+        XCTAssertGreaterThanOrEqual(current.diskWriteRate ?? 0, 0)
+    }
+
+    func testProcessPresentationMetadata() {
+        XCTAssertEqual(ProcessScope.all.titleKey, "All Processes")
+        XCTAssertEqual(ProcessScope.user.titleKey, "User Processes")
+        XCTAssertEqual(ProcessSort.energy.titleKey, "Energy Score")
+        XCTAssertEqual(ProcessSort.disk.titleKey, "Disk I/O")
+    }
 }

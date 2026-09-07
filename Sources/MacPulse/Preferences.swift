@@ -10,6 +10,9 @@ import ServiceManagement
     @Published var temperatureThreshold: Double { didSet { defaults.set(temperatureThreshold, forKey: "temperatureThreshold") } }
     @Published var batteryThreshold: Double { didSet { defaults.set(batteryThreshold, forKey: "batteryThreshold") } }
     @Published var storageThreshold: Double { didSet { defaults.set(storageThreshold, forKey: "storageThreshold") } }
+    @Published var processInterval: Double { didSet { defaults.set(processInterval, forKey: "processInterval") } }
+    @Published var processTopLimit: Int { didSet { defaults.set(processTopLimit, forKey: "processTopLimit") } }
+    @Published var showSystemProcesses: Bool { didSet { defaults.set(showSystemProcesses, forKey: "showSystemProcesses") } }
     @Published var loginMessage = ""
     var colorScheme: ColorScheme? { appearance == "Dark" ? .dark : appearance == "Light" ? .light : nil }
     init(defaults: UserDefaults = .standard) {
@@ -23,6 +26,11 @@ import ServiceManagement
         temperatureThreshold = defaults.object(forKey: "temperatureThreshold") as? Double ?? 90
         batteryThreshold = defaults.object(forKey: "batteryThreshold") as? Double ?? 15
         storageThreshold = defaults.object(forKey: "storageThreshold") as? Double ?? 10
+        let processRate = defaults.double(forKey: "processInterval")
+        processInterval = [1.0, 2.0, 5.0, 10.0].contains(processRate) ? processRate : 2
+        let processLimit = defaults.integer(forKey: "processTopLimit")
+        processTopLimit = [20, 50].contains(processLimit) ? processLimit : 20
+        showSystemProcesses = defaults.object(forKey: "showSystemProcesses") as? Bool ?? false
     }
     func toggle(_ metric: Metric) { if menu.contains(metric) { menu.removeAll { $0 == metric } } else { menu.append(metric) } }
     func move(_ metric: Metric, by offset: Int) {
