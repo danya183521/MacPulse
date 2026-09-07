@@ -17,7 +17,7 @@ import AppKit
             .defaultSize(width: 1100, height: 780)
             .commands {
                 CommandGroup(after: .windowArrangement) {
-                    Button("Show Quick Panel") { status.togglePanel() }.keyboardShortcut("m", modifiers: [.command,.shift])
+                    Button(L10n.text("Show Quick Panel")) { status.togglePanel() }.keyboardShortcut("m", modifiers: [.command,.shift])
                 }
             }
         Settings { SettingsView(preferences: preferences, engine: engine) }
@@ -48,7 +48,7 @@ struct MenuPanel: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            HStack { Label("MacPulse", systemImage: "waveform.path.ecg").font(.headline); Spacer(); Text(engine.snapshot.info["chip"] ?? "Connecting…").font(.caption).foregroundStyle(.secondary) }
+            HStack { Label("MacPulse", systemImage: "waveform.path.ecg").font(.headline); Spacer(); Text(engine.snapshot.info["chip"] ?? L10n.text("Connecting…")).font(.caption).foregroundStyle(.secondary) }
             ScrollView {
             LazyVGrid(columns: [GridItem(.flexible()),GridItem(.flexible())], spacing: 12) {
                 ForEach(metrics) { metric in
@@ -56,13 +56,13 @@ struct MenuPanel: View {
                 }
             }
             }.frame(height: min(380, CGFloat((metrics.count + 1) / 2) * 76))
-            HStack { Text("Thermals \(engine.snapshot.thermalLabel.lowercased())"); Spacer(); Text(engine.snapshot.date, style: .time) }.font(.caption).foregroundStyle(.secondary)
+            HStack { Text(L10n.format("Thermals %@", engine.snapshot.thermalLabel.lowercased())); Spacer(); Text(engine.snapshot.date, style: .time) }.font(.caption).foregroundStyle(.secondary)
             Divider()
             HStack {
-                Button("Dashboard") { dashboard() }.keyboardShortcut("d").accessibilityIdentifier("panel-dashboard")
-                Button { settings() } label: { Image(systemName: "gearshape") }.help("Settings").accessibilityIdentifier("panel-settings")
+                Button(L10n.text("Dashboard")) { dashboard() }.keyboardShortcut("d").accessibilityIdentifier("panel-dashboard")
+                Button { settings() } label: { Image(systemName: "gearshape") }.help(L10n.text("Settings")).accessibilityIdentifier("panel-settings")
                 Spacer()
-                Button { NSApp.terminate(nil) } label: { Image(systemName: "power") }.help("Quit MacPulse")
+                Button { NSApp.terminate(nil) } label: { Image(systemName: "power") }.help(L10n.text("Quit MacPulse"))
             }
         }.padding(18).frame(width: 360).preferredColorScheme(preferences.colorScheme)
     }

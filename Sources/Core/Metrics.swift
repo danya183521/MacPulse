@@ -9,17 +9,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
     case storage, storageTotal, storageUsed, storageAvailable, diskRead, diskWrite
     var id: String { rawValue }
     var title: String {
-        switch self {
-        case .cpu: "CPU"; case .cpuTemperature: "CPU temperature"; case .cpuPower: "CPU power"
-        case .gpu: "GPU"; case .gpuTemperature: "GPU temperature"; case .gpuPower: "GPU power"; case .gpuMemory: "GPU memory in use"
-        case .memory: "Memory"; case .memoryUsed: "Used memory"; case .memoryAvailable: "Available memory"; case .memoryTotal: "Physical memory"
-        case .wired: "Wired"; case .compressed: "Compressed"; case .cached: "Cached files"; case .swap: "Swap used"; case .swapTotal: "Swap allocated"
-        case .battery: "Battery"; case .batteryHealth: "Capacity health"; case .cycles: "Charge cycles"; case .batteryTemperature: "Battery temperature"
-        case .voltage: "Voltage"; case .amperage: "Current"; case .batteryPower: "Battery power"; case .designCapacity: "Design capacity"; case .currentCapacity: "Current capacity"; case .maxCapacity: "Full charge capacity"
-        case .systemPower: "System power · SMC"; case .packagePower: "SMC PHPC power"; case .anePower: "Neural Engine power"; case .computePower: "CPU + GPU + ANE"
-        case .download: "Download"; case .upload: "Upload"; case .wifiSignal: "Wi-Fi signal"; case .wifiNoise: "Wi-Fi noise"; case .wifiLink: "Wi-Fi transmit link"
-        case .storage: "Storage"; case .storageTotal: "Total capacity"; case .storageUsed: "Used storage"; case .storageAvailable: "Free storage"; case .diskRead: "Disk read"; case .diskWrite: "Disk write"
-        }
+        L10n.text("metric.\(rawValue)")
     }
     var symbol: String {
         switch self {
@@ -47,24 +37,40 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         }
     }
     var source: String {
+        L10n.text("source.\(sourceKey)")
+    }
+    private var sourceKey: String {
         switch self {
-        case .systemPower, .packagePower: "AppleSMC read-only float keys PSTR / PHPC • private ABI • experimental rail mapping"
-        case .battery: "IOKit public Power Sources API • AppleSmartBattery fallback"
-        case .cpu: "Mach host_processor_info • tick deltas"
-        case .cpuTemperature, .gpuTemperature: "IOHID temperature events • private API • mean of named CPU/GPU sensors"
-        case .cpuPower, .gpuPower, .anePower, .computePower: "IOReport Energy Model / PMP • private API • energy delta / elapsed time"
-        case .gpu, .gpuMemory: "IOKit IOAccelerator • undocumented PerformanceStatistics"
-        case .memory, .memoryUsed, .memoryAvailable, .memoryTotal, .wired, .compressed, .cached: "Mach host_statistics64 • VM pages × page size"
-        case .swap, .swapTotal: "sysctl vm.swapusage"
-        case .download, .upload: "sysctl IFMIB_IFDATA / IFDATA_GENERAL • primary-interface 64-bit byte-counter deltas"
-        case .wifiSignal, .wifiNoise, .wifiLink: "CoreWLAN • link information"
-        case .storage, .storageTotal, .storageUsed, .storageAvailable: "Foundation volume capacity • home volume • excludes purgeable space"
-        case .diskRead, .diskWrite: "IOKit IOBlockStorageDriver • all physical drive byte-counter deltas"
-        default: "IOKit AppleSmartBattery • undocumented registry properties"
+        case .systemPower, .packagePower: "smc"
+        case .battery: "battery"
+        case .cpu: "cpu"
+        case .cpuTemperature, .gpuTemperature: "temperature"
+        case .cpuPower, .gpuPower, .anePower, .computePower: "ioreport"
+        case .gpu, .gpuMemory: "gpu"
+        case .memory, .memoryUsed, .memoryAvailable, .memoryTotal, .wired, .compressed, .cached: "memory"
+        case .swap, .swapTotal: "swap"
+        case .download, .upload: "network"
+        case .wifiSignal, .wifiNoise, .wifiLink: "wifi"
+        case .storage, .storageTotal, .storageUsed, .storageAvailable: "storage"
+        case .diskRead, .diskWrite: "disk"
+        default: "batteryDetails"
         }
     }
     var menuPrefix: String {
-        switch self { case .cpu: "CPU"; case .gpu: "GPU"; case .memory: "RAM"; case .download: "↓"; case .upload: "↑"; case .battery: "BAT"; case .cpuTemperature: ""; case .cpuPower: "CPU"; case .systemPower: "SYS"; case .anePower: "ANE"; case .computePower: "Σ"; default: title }
+        switch self {
+        case .cpu, .cpuPower: "CPU"
+        case .gpu, .gpuPower, .gpuMemory: "GPU"
+        case .memory: "RAM"
+        case .download: "↓"
+        case .upload: "↑"
+        case .battery, .batteryPower, .batteryHealth: "BAT"
+        case .cpuTemperature: ""
+        case .systemPower: "SYS"
+        case .anePower: "ANE"
+        case .computePower: "Σ"
+        case .storage: "SSD"
+        default: ""
+        }
     }
     func format(_ value: Double?, compact: Bool = false) -> String {
         guard let v = value, v.isFinite else { return "—" }
@@ -73,11 +79,11 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
             let divisor: Double = v >= 1_000_000_000 ? 1e9 : v >= 1_000_000 ? 1e6 : v >= 1_000 ? 1e3 : 1
             let suffix = divisor == 1e9 ? "G" : divisor == 1e6 ? "M" : divisor == 1e3 ? "K" : "B"
             let n = v / divisor
-            let text = String(format: n < 10 && divisor > 1 ? "%.1f" : "%.0f", n)
+            let text = String(format: n < 10 && divisor > 1 ? "%.1f" : "%.0f", locale: Locale.current, n)
             return compact ? text + suffix : text + " " + suffix + (divisor == 1 ? "/s" : "B/s")
         }
         let decimals = ["W", "V", "A"].contains(unit) ? (unit == "A" ? 2 : 1) : 0
-        let number = String(format: "%.*f", decimals, v)
+        let number = String(format: "%.*f", locale: Locale.current, decimals, v)
         if unit == "%" || unit == "°C" { return number + unit }
         return number + (compact ? "" : " ") + unit
     }
@@ -96,24 +102,24 @@ struct Snapshot: Codable {
     subscript(_ metric: Metric) -> Double? { values[metric.rawValue] }
     func reason(for metric: Metric) -> String {
         switch metric {
-        case .cpuTemperature, .gpuTemperature: info["thermalReason"] ?? "Temperature service has no valid reading"
-        case .cpuPower, .gpuPower, .anePower, .computePower: info["powerReason"] ?? "Energy channel or supported unit is absent"
-        case .download, .upload: "Waiting for two samples on the active network interface"
-        case .gpu, .gpuMemory: "IOAccelerator does not expose this statistic"
-        case .wifiSignal, .wifiNoise, .wifiLink: "Wi-Fi is off, disconnected or access is restricted"
-        case .cpu, .diskRead, .diskWrite: "Waiting for counter deltas, or counters are unavailable"
-        default: "This system source does not expose the requested value"
+        case .cpuTemperature, .gpuTemperature: L10n.text("reason.temperature")
+        case .cpuPower, .gpuPower, .anePower, .computePower: L10n.text("reason.power")
+        case .download, .upload: L10n.text("reason.network")
+        case .gpu, .gpuMemory: L10n.text("reason.gpu")
+        case .wifiSignal, .wifiNoise, .wifiLink: L10n.text("reason.wifi")
+        case .cpu, .diskRead, .diskWrite: L10n.text("reason.counters")
+        default: L10n.text("reason.source")
         }
     }
     var thermalLabel: String {
-        switch Int(values["thermalState"] ?? -1) { case 0: "Nominal"; case 1: "Fair"; case 2: "Serious"; case 3: "Critical"; default: "Unavailable" }
+        switch Int(values["thermalState"] ?? -1) { case 0: L10n.text("status.nominal"); case 1: L10n.text("status.fair"); case 2: L10n.text("status.serious"); case 3: L10n.text("status.critical"); default: L10n.text("Unavailable") }
     }
     var pressureLabel: String {
-        switch Int(values["pressure"] ?? -1) { case 1: "Normal"; case 2: "Warning"; case 4: "Critical"; default: "Unavailable" }
+        switch Int(values["pressure"] ?? -1) { case 1: L10n.text("status.normal"); case 2: L10n.text("status.warning"); case 4: L10n.text("status.critical"); default: L10n.text("Unavailable") }
     }
     var batteryState: String {
-        guard let charging = values["charging"], let external = values["externalPower"] else { return "Unavailable" }
-        return charging == 1 ? "Charging" : external == 1 ? "On external power" : "Discharging"
+        guard let charging = values["charging"], let external = values["externalPower"] else { return L10n.text("Unavailable") }
+        return charging == 1 ? L10n.text("status.charging") : external == 1 ? L10n.text("status.externalPower") : L10n.text("status.discharging")
     }
 }
 

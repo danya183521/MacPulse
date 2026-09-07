@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2B3C4D5E6F708192A3B4C5 /* Sources/Core/Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708192A3B4C4 /* Sources/Core/Localization.swift */; };
+		1A2B3C4D5E6F708192A3B4C6 /* Sources/Core/Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708192A3B4C4 /* Sources/Core/Localization.swift */; };
+		1A2B3C4D5E6F708192A3B4C7 /* Sources/Core/Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */; };
+		1A2B3C4D5E6F708192A3B4C9 /* Sources/Core/Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */; };
 		044071864FCE90ACB57DF431 /* Sources/MacPulse/SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB551C6FEBAA8BDE5B2604C3 /* Sources/MacPulse/SettingsView.swift */; };
 		05DA39414C0243591CD15ABA /* Sources/MacPulse/AlertEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924F705A6156FE603E39785 /* Sources/MacPulse/AlertEngine.swift */; };
 		14C7B1AFCFF016929525853A /* Sources/Widget/MacPulseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8ECAE7000FC7B897DEA94D /* Sources/Widget/MacPulseWidget.swift */; };
@@ -57,6 +61,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A2B3C4D5E6F708192A3B4C4 /* Sources/Core/Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/Core/Localization.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Sources/Core/Localizable.xcstrings; sourceTree = "<group>"; };
 		03B9AB09A35384595FAE95F2 /* MacPulseWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacPulseWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E460760F08344CF93982B0 /* Sources/PrivateSensors/MPNetworkCounters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sources/PrivateSensors/MPNetworkCounters.m; sourceTree = "<group>"; };
 		0B8ECAE7000FC7B897DEA94D /* Sources/Widget/MacPulseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/Widget/MacPulseWidget.swift; sourceTree = "<group>"; };
@@ -106,6 +112,8 @@
 		64292B1C2B2E13EAD8788FC8 = {
 			isa = PBXGroup;
 			children = (
+				1A2B3C4D5E6F708192A3B4C4 /* Sources/Core/Localization.swift */,
+				1A2B3C4D5E6F708192A3B4C8 /* Sources/Core/Localizable.xcstrings */,
 				A14A213F7A2E8C7D926DCAFD /* Sources/Core/Metrics.swift */,
 				4FAF38FB4A6F534BE9B11C82 /* Sources/Core/WidgetSnapshot.swift */,
 				8924F705A6156FE603E39785 /* Sources/MacPulse/AlertEngine.swift */,
@@ -209,6 +217,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 64292B1C2B2E13EAD8788FC8;
 			productRefGroup = FBDC4F23F93125BBEEAE800C /* Products */;
@@ -228,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D393A4EEAFAAE7A7027F57C /* Sources/MacPulse/MacPulse.icns in Resources */,
+				1A2B3C4D5E6F708192A3B4C7 /* Sources/Core/Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A2B3C4D5E6F708192A3B4C9 /* Sources/Core/Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94288F304221786209FC7178 /* Sources/Core/Metrics.swift in Sources */,
+				1A2B3C4D5E6F708192A3B4C5 /* Sources/Core/Localization.swift in Sources */,
 				7360B5A8B006BE51C6309B81 /* Sources/Core/WidgetSnapshot.swift in Sources */,
 				05DA39414C0243591CD15ABA /* Sources/MacPulse/AlertEngine.swift in Sources */,
 				B7297A3C51E52FB648585C48 /* Sources/MacPulse/Dashboard.swift in Sources */,
@@ -279,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14C7B1AFCFF016929525853A /* Sources/Widget/MacPulseWidget.swift in Sources */,
+				1A2B3C4D5E6F708192A3B4C6 /* Sources/Core/Localization.swift in Sources */,
 				B688E66409A86CAF35DF9BF1 /* Sources/Core/WidgetSnapshot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

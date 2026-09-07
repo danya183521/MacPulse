@@ -4,7 +4,7 @@ import XCTest
 final class MacPulseTests: XCTestCase {
     func testUnavailableNeverFormatsAsZero() {
         for metric in Metric.allCases { XCTAssertEqual(metric.format(nil), "—"); XCTAssertEqual(metric.format(.nan), "—") }
-        XCTAssertEqual(Metric.download.format(1_200_000, compact: true), "1.2M")
+        XCTAssertEqual(Metric.download.format(1_200_000, compact: true), String(format: "%.1fM", locale: Locale.current, 1.2))
         XCTAssertEqual(Metric.cpu.format(0), "0%")
     }
     func testAlertCooldownSurvivesPolicyRestore() {

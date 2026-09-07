@@ -29,6 +29,7 @@
 | 21 | Основные runtime-сценарии | Live sampling, реальные нагрузки, persistence, Overview, panel/settings и native status item проверены. Widget и полный проход детальных страниц остаются открытыми. |
 | 22 | Документация | README: архитектура, все типы источников, private ABI, история, privacy, widgets, ограничения и команды. |
 | 23 | Локальный git commit, clean, no remote | Локальный repository на main; рабочая версия закоммичена, финальный git status clean, remote отсутствует. Push не выполнялся. |
+| 24 | Русская локализация | `Sources/Core/Localizable.xcstrings` подключён к app и WidgetKit extension; 226 ключей имеют русский перевод. Финальный clean build создал `en`/`ru` ресурсы в обоих bundles. Русский Overview, Menu Bar panel, Settings и Alerts с реальными данными подтверждены через AX; все detail-разделы покрыты каталогом и исходным UI-аудитом, но их последовательный runtime-переход не подтверждён из-за сбоя CUA native pipe. |
 
 ## Объективные внешние ограничения
 
@@ -46,3 +47,7 @@
 ## Local signing follow-up, 2026-09-07
 
 The earlier missing-team diagnosis is superseded: Personal Team is now selected for both Signed Debug targets. Xcode shows two certificates with Missing Private Key, zero valid local identities, and an automatic signing error: `The user name or passphrase you entered is not correct.` Paid membership has NOT been established as necessary. Widget runtime remains unverified. See [LocalSigning.md](LocalSigning.md) for evidence and the manual certificate step.
+
+## Localization follow-up, 2026-09-07
+
+`Localizable.xcstrings` содержит английский исходный язык и русский перевод всех извлечённых пользовательских строк: Dashboard, detail pages, Menu Bar, Quick Panel, Settings, alerts, statuses, accessibility и WidgetKit. Форматирование чисел и дат использует `Locale.current`; технические обозначения и единицы сохраняются компактными. Смена языка выполняется через per-app language в системных настройках macOS, после чего приложение нужно перезапустить. Build и 9 XCTest прошли после подключения каталога.

@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import ServiceManagement
 
 struct SettingsView: View {
@@ -24,8 +25,8 @@ struct SettingsView: View {
                             Toggle(isOn: Binding(get: { preferences.menu.contains(metric) }, set: { _ in preferences.toggle(metric) })) { Label(metric.title, systemImage: metric.symbol) }.toggleStyle(.checkbox).accessibilityIdentifier("toggle-\(metric.rawValue)")
                             Spacer()
                             if preferences.menu.contains(metric) {
-                                Button { preferences.move(metric, by: -1) } label: { Image(systemName: "chevron.up") }.disabled(preferences.menu.first == metric).help("Move \(metric.title) earlier").accessibilityIdentifier("up-\(metric.rawValue)")
-                                Button { preferences.move(metric, by: 1) } label: { Image(systemName: "chevron.down") }.disabled(preferences.menu.last == metric).help("Move \(metric.title) later").accessibilityIdentifier("down-\(metric.rawValue)")
+                                Button { preferences.move(metric, by: -1) } label: { Image(systemName: "chevron.up") }.disabled(preferences.menu.first == metric).help(L10n.format("Move %@ earlier", metric.title)).accessibilityIdentifier("up-\(metric.rawValue)")
+                                Button { preferences.move(metric, by: 1) } label: { Image(systemName: "chevron.down") }.disabled(preferences.menu.last == metric).help(L10n.format("Move %@ later", metric.title)).accessibilityIdentifier("down-\(metric.rawValue)")
                             }
                         }.padding(.vertical, 9)
                         Divider()
@@ -38,10 +39,16 @@ struct SettingsView: View {
     private var generalSettings: some View {
         Form {
             Section("Sampling") {
-                Picker("Update every", selection: $preferences.interval) { ForEach([1.0,2.0,5.0,10.0], id: \.self) { Text("\(Int($0)) seconds").tag($0) } }.accessibilityIdentifier("sampling-interval")
+                Picker("Update every", selection: $preferences.interval) { ForEach([1.0,2.0,5.0,10.0], id: \.self) { Text(L10n.format("%d seconds", Int($0))).tag($0) } }.accessibilityIdentifier("sampling-interval")
                 Text("2 seconds is a balanced default. Static information and Wi-Fi refresh every 15 samples. Sampling pauses during sleep.").font(.caption).foregroundStyle(.secondary)
             }
-            Section("Appearance") { Picker("Theme", selection: $preferences.appearance) { ForEach(["System","Light","Dark"], id: \.self) { Text($0).tag($0) } } }
+            Section("Appearance") { Picker("Theme", selection: $preferences.appearance) { ForEach(["System","Light","Dark"], id: \.self) { Text(L10n.text($0)).tag($0) } } }
+            Section("Language") {
+                Text(L10n.text("MacPulse follows the per-app language selected in macOS System Settings."))
+                Text(L10n.format("Current language: %@", Locale.current.localizedString(forLanguageCode: Locale.current.language.languageCode?.identifier ?? "en") ?? "English")).font(.caption).foregroundStyle(.secondary)
+                Button("Open Language & Region Settings") { NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.Localization-Settings.extension")!) }
+                Text("Restart MacPulse after changing the per-app language.").font(.caption).foregroundStyle(.secondary)
+            }
             Section("Startup") {
                 Toggle("Launch at Login", isOn: Binding(get: { SMAppService.mainApp.status == .enabled }, set: { preferences.setLogin($0) }))
                 if SMAppService.mainApp.status == .requiresApproval { Text("macOS approval is required in Login Items.").font(.caption) }
@@ -58,9 +65,9 @@ struct SettingsView: View {
                 Text("Conditions must persist for 30 seconds. At most one notification per condition per hour. Alerts are off by default.").font(.caption).foregroundStyle(.secondary)
             }
             Section("Thresholds") {
-                Stepper("CPU temperature: \(Int(preferences.temperatureThreshold))°C", value: $preferences.temperatureThreshold, in: 60...110, step: 5)
-                Stepper("Low battery: \(Int(preferences.batteryThreshold))%", value: $preferences.batteryThreshold, in: 5...40, step: 5)
-                Stepper("Free storage below: \(Int(preferences.storageThreshold)) GB", value: $preferences.storageThreshold, in: 5...100, step: 5)
+                Stepper(L10n.format("CPU temperature: %d°C", Int(preferences.temperatureThreshold)), value: $preferences.temperatureThreshold, in: 60...110, step: 5)
+                Stepper(L10n.format("Low battery: %d%%", Int(preferences.batteryThreshold)), value: $preferences.batteryThreshold, in: 5...40, step: 5)
+                Stepper(L10n.format("Free storage below: %d GB", Int(preferences.storageThreshold)), value: $preferences.storageThreshold, in: 5...100, step: 5)
                 Text("Memory alerts use critical macOS memory pressure, not a percentage threshold.").font(.caption).foregroundStyle(.secondary)
             }.disabled(!preferences.alertsEnabled)
             Section("Permission") { AlertPermissionView(alerts: engine.alerts) }

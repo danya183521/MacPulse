@@ -1,0 +1,2836 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "metric.cpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "metric.cpuTemperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температура CPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU temperature"
+          }
+        }
+      }
+    },
+    "metric.cpuPower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потребление CPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU power"
+          }
+        }
+      }
+    },
+    "metric.gpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU"
+          }
+        }
+      }
+    },
+    "metric.gpuTemperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температура GPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU temperature"
+          }
+        }
+      }
+    },
+    "metric.gpuPower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потребление GPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU power"
+          }
+        }
+      }
+    },
+    "metric.gpuMemory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Память GPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU memory in use"
+          }
+        }
+      }
+    },
+    "metric.memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Память"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory"
+          }
+        }
+      }
+    },
+    "metric.memoryUsed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовано памяти"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used memory"
+          }
+        }
+      }
+    },
+    "metric.memoryAvailable": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступно памяти"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available memory"
+          }
+        }
+      }
+    },
+    "metric.memoryTotal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Физическая память"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Physical memory"
+          }
+        }
+      }
+    },
+    "metric.wired": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закреплено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wired"
+          }
+        }
+      }
+    },
+    "metric.compressed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сжато"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compressed"
+          }
+        }
+      }
+    },
+    "metric.cached": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кэшированные файлы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cached files"
+          }
+        }
+      }
+    },
+    "metric.swap": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовано подкачки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap used"
+          }
+        }
+      }
+    },
+    "metric.swapTotal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выделено подкачки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swap allocated"
+          }
+        }
+      }
+    },
+    "metric.battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аккумулятор"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery"
+          }
+        }
+      }
+    },
+    "metric.batteryHealth": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Состояние аккумулятора"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capacity health"
+          }
+        }
+      }
+    },
+    "metric.cycles": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Количество циклов"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charge cycles"
+          }
+        }
+      }
+    },
+    "metric.batteryTemperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температура аккумулятора"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery temperature"
+          }
+        }
+      }
+    },
+    "metric.voltage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напряжение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltage"
+          }
+        }
+      }
+    },
+    "metric.amperage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ток"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current"
+          }
+        }
+      }
+    },
+    "metric.batteryPower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность аккумулятора"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery power"
+          }
+        }
+      }
+    },
+    "metric.designCapacity": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расчётная ёмкость"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Design capacity"
+          }
+        }
+      }
+    },
+    "metric.currentCapacity": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущая ёмкость"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current capacity"
+          }
+        }
+      }
+    },
+    "metric.maxCapacity": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полная ёмкость заряда"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full charge capacity"
+          }
+        }
+      }
+    },
+    "metric.anePower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность Neural Engine"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine power"
+          }
+        }
+      }
+    },
+    "metric.computePower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU + GPU + ANE"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU + GPU + ANE"
+          }
+        }
+      }
+    },
+    "metric.systemPower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системная мощность · SMC"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System power · SMC"
+          }
+        }
+      }
+    },
+    "metric.packagePower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность SMC PHPC"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMC PHPC power"
+          }
+        }
+      }
+    },
+    "metric.download": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download"
+          }
+        }
+      }
+    },
+    "metric.upload": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отдача"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upload"
+          }
+        }
+      }
+    },
+    "metric.wifiSignal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сигнал Wi-Fi"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi signal"
+          }
+        }
+      }
+    },
+    "metric.wifiNoise": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шум Wi-Fi"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi noise"
+          }
+        }
+      }
+    },
+    "metric.wifiLink": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Канал передачи Wi-Fi"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi transmit link"
+          }
+        }
+      }
+    },
+    "metric.storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Накопитель"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage"
+          }
+        }
+      }
+    },
+    "metric.storageTotal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общая ёмкость"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total capacity"
+          }
+        }
+      }
+    },
+    "metric.storageUsed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовано на накопителе"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used storage"
+          }
+        }
+      }
+    },
+    "metric.storageAvailable": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свободно на накопителе"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free storage"
+          }
+        }
+      }
+    },
+    "metric.diskRead": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтение диска"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk read"
+          }
+        }
+      }
+    },
+    "metric.diskWrite": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись диска"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk write"
+          }
+        }
+      }
+    },
+    "source.smc": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AppleSMC: ключи PSTR / PHPC только для чтения • private ABI • экспериментальная привязка линии питания"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AppleSMC: read-only PSTR / PHPC keys · private ABI · experimental rail mapping"
+          }
+        }
+      }
+    },
+    "source.battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Публичный IOKit Power Sources API • запасной AppleSmartBattery"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Public IOKit Power Sources API · AppleSmartBattery fallback"
+          }
+        }
+      }
+    },
+    "source.cpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach host_processor_info • дельта тактов"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach host_processor_info · tick deltas"
+          }
+        }
+      }
+    },
+    "source.temperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "События температуры IOHID • private API • среднее именованных CPU/GPU-сенсоров"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOHID temperature events · private API · named CPU/GPU sensor average"
+          }
+        }
+      }
+    },
+    "source.ioreport": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOReport Energy Model / PMP • private API • дельта энергии / время"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOReport Energy Model / PMP · private API · energy delta / elapsed time"
+          }
+        }
+      }
+    },
+    "source.gpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit IOAccelerator • недокументированный PerformanceStatistics"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit IOAccelerator · undocumented PerformanceStatistics"
+          }
+        }
+      }
+    },
+    "source.memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach host_statistics64 • страницы VM × размер страницы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach host_statistics64 · VM pages × page size"
+          }
+        }
+      }
+    },
+    "source.swap": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sysctl vm.swapusage"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sysctl vm.swapusage"
+          }
+        }
+      }
+    },
+    "source.network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sysctl IFMIB_IFDATA / IFDATA_GENERAL • дельта 64-битных счётчиков основного интерфейса"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sysctl IFMIB_IFDATA / IFDATA_GENERAL · primary interface 64-bit counter deltas"
+          }
+        }
+      }
+    },
+    "source.wifi": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CoreWLAN • сведения о соединении"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CoreWLAN · connection details"
+          }
+        }
+      }
+    },
+    "source.storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ёмкость тома Foundation • домашний том • без очищаемого места"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foundation volume capacity · home volume · purgeable space excluded"
+          }
+        }
+      }
+    },
+    "source.disk": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit IOBlockStorageDriver • дельта счётчиков всех физических дисков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit IOBlockStorageDriver · all physical disk counter deltas"
+          }
+        }
+      }
+    },
+    "source.batteryDetails": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit AppleSmartBattery • недокументированные свойства реестра"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOKit AppleSmartBattery · undocumented registry properties"
+          }
+        }
+      }
+    },
+    "reason.temperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Служба температуры не вернула корректное значение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperature service returned no valid value"
+          }
+        }
+      }
+    },
+    "reason.power": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Канал энергии или поддерживаемая единица отсутствует"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energy channel or supported unit is unavailable"
+          }
+        }
+      }
+    },
+    "reason.network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание двух отсчётов активного сетевого интерфейса"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for two samples of the active network interface"
+          }
+        }
+      }
+    },
+    "reason.gpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOAccelerator не предоставляет этот показатель"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IOAccelerator does not provide this reading"
+          }
+        }
+      }
+    },
+    "reason.wifi": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi выключен, отключён или доступ ограничен"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wi-Fi is off, disconnected or access is restricted"
+          }
+        }
+      }
+    },
+    "reason.counters": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание дельты счётчиков или счётчики недоступны"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for counter delta or counters are unavailable"
+          }
+        }
+      }
+    },
+    "reason.source": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системный источник не предоставляет этот показатель"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System source does not provide this reading"
+          }
+        }
+      }
+    },
+    "status.nominal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Норма"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nominal"
+          }
+        }
+      }
+    },
+    "status.fair": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умеренная"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fair"
+          }
+        }
+      }
+    },
+    "status.serious": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серьёзная"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serious"
+          }
+        }
+      }
+    },
+    "status.critical": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Критическая"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Critical"
+          }
+        }
+      }
+    },
+    "status.normal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Норма"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal"
+          }
+        }
+      }
+    },
+    "status.warning": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предупреждение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warning"
+          }
+        }
+      }
+    },
+    "status.charging": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заряжается"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charging"
+          }
+        }
+      }
+    },
+    "status.externalPower": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "От внешнего питания"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "External power"
+          }
+        }
+      }
+    },
+    "status.discharging": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разряжается"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discharging"
+          }
+        }
+      }
+    },
+    "page.Overview": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        }
+      }
+    },
+    "page.Memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Память"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memory"
+          }
+        }
+      }
+    },
+    "page.Thermals": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температуры"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thermals"
+          }
+        }
+      }
+    },
+    "page.Battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аккумулятор"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Battery"
+          }
+        }
+      }
+    },
+    "page.Power": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Энергия"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Power"
+          }
+        }
+      }
+    },
+    "page.Network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Network"
+          }
+        }
+      }
+    },
+    "page.Storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Накопитель"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage"
+          }
+        }
+      }
+    },
+    "page.System": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Система"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "subtitle.overview": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Состояние Mac прямо сейчас."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A clear view of your Mac, right now."
+          }
+        }
+      }
+    },
+    "subtitle.cpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность процессора на всех логических ядрах."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processor activity across every logical core."
+          }
+        }
+      }
+    },
+    "subtitle.gpu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность графики и доступные аппаратные показатели."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graphics activity and available hardware readings."
+          }
+        }
+      }
+    },
+    "subtitle.memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общая память, сжатие и подкачка."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unified memory, compression and swap."
+          }
+        }
+      }
+    },
+    "subtitle.thermals": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температуры сенсоров и тепловое давление macOS."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reported sensor temperatures and macOS thermal pressure."
+          }
+        }
+      }
+    },
+    "subtitle.battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заряд, ёмкость и электрические показатели."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charge, capacity and electrical measurements."
+          }
+        }
+      }
+    },
+    "subtitle.power": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модельная мощность компонентов и поток энергии аккумулятора."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modeled component power and measured battery flow."
+          }
+        }
+      }
+    },
+    "subtitle.network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Трафик основного сетевого интерфейса."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traffic on the primary network interface."
+          }
+        }
+      }
+    },
+    "subtitle.storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ёмкость системного тома и активность физических дисков."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System data volume capacity and physical drive activity."
+          }
+        }
+      }
+    },
+    "subtitle.system": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аппаратная и программная основа этих показателей."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The hardware and software behind these readings."
+          }
+        }
+      }
+    },
+    "Overview": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор"
+          }
+        }
+      }
+    },
+    "Memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Память"
+          }
+        }
+      }
+    },
+    "Thermals": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температуры"
+          }
+        }
+      }
+    },
+    "Battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аккумулятор"
+          }
+        }
+      }
+    },
+    "Power": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Энергия"
+          }
+        }
+      }
+    },
+    "Network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеть"
+          }
+        }
+      }
+    },
+    "Storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Накопитель"
+          }
+        }
+      }
+    },
+    "System": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системная"
+          }
+        }
+      }
+    },
+    "CPU": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "GPU": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU"
+          }
+        }
+      }
+    },
+    "MacPulse": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacPulse"
+          }
+        }
+      }
+    },
+    "Unavailable": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недоступно"
+          }
+        }
+      }
+    },
+    "Connecting…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключение…"
+          }
+        }
+      }
+    },
+    "Live reading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущие данные"
+          }
+        }
+      }
+    },
+    "Interval average": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Среднее за интервал"
+          }
+        }
+      }
+    },
+    "Reported sensor average": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Среднее показаний сенсоров"
+          }
+        }
+      }
+    },
+    "Battery controller reading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показание контроллера аккумулятора"
+          }
+        }
+      }
+    },
+    "Experimental SMC reading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Экспериментальное показание SMC"
+          }
+        }
+      }
+    },
+    "Pressure: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давление: %@"
+          }
+        }
+      }
+    },
+    "%@ free": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свободно: %@"
+          }
+        }
+      }
+    },
+    "%@ free of %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свободно %@ из %@"
+          }
+        }
+      }
+    },
+    "%@ history, %d samples": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История %@, отсчётов: %d"
+          }
+        }
+      }
+    },
+    "Live · every %ds": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущие данные · каждые %d с"
+          }
+        }
+      }
+    },
+    "Thermals %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температуры: %@"
+          }
+        }
+      }
+    },
+    "Thermals: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температуры: %@"
+          }
+        }
+      }
+    },
+    "Memory: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Память: %@"
+          }
+        }
+      }
+    },
+    "Logical cores · %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логические ядра · %@"
+          }
+        }
+      }
+    },
+    "Core %d": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ядро %d"
+          }
+        }
+      }
+    },
+    "Available temperature sensors · %d": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступные сенсоры температуры · %d"
+          }
+        }
+      }
+    },
+    "Battery controller snapshot: %d seconds old.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снимку контроллера аккумулятора %d с."
+          }
+        }
+      }
+    },
+    "%dd %dh %dm": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d д %d ч %d мин"
+          }
+        }
+      }
+    },
+    "%.1f ms / sample": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f мс / отсчёт"
+          }
+        }
+      }
+    },
+    "No readings yet": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показаний пока нет"
+          }
+        }
+      }
+    },
+    "A chart appears when this metric becomes available.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "График появится, когда показатель станет доступен."
+          }
+        }
+      }
+    },
+    "Recent history": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недавняя история"
+          }
+        }
+      }
+    },
+    "History": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История"
+          }
+        }
+      }
+    },
+    "5 min": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 мин"
+          }
+        }
+      }
+    },
+    "15 min": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "15 мин"
+          }
+        }
+      }
+    },
+    "30 min": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 мин"
+          }
+        }
+      }
+    },
+    "This session · up to 900 samples / 30 minutes · gaps remain visible": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этот запуск · до 900 отсчётов / 30 минут · пропуски сохранены"
+          }
+        }
+      }
+    },
+    "Paused during sleep": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза во время сна"
+          }
+        }
+      }
+    },
+    "Loading topology…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка топологии…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading topology…"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время"
+          }
+        }
+      }
+    },
+    "Connection": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Соединение"
+          }
+        }
+      }
+    },
+    "Primary interface": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Основной интерфейс"
+          }
+        }
+      }
+    },
+    "Local IPv4": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Локальный IPv4"
+          }
+        }
+      }
+    },
+    "Wi-Fi network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеть Wi-Fi"
+          }
+        }
+      }
+    },
+    "Mounted volumes": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключённые тома"
+          }
+        }
+      }
+    },
+    "This Mac": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этот Mac"
+          }
+        }
+      }
+    },
+    "Local by design": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Локальная работа"
+          }
+        }
+      }
+    },
+    "Model": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель"
+          }
+        }
+      }
+    },
+    "Chip": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чип"
+          }
+        }
+      }
+    },
+    "Hostname": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя компьютера"
+          }
+        }
+      }
+    },
+    "Uptime": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время работы"
+          }
+        }
+      }
+    },
+    "Physical memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Физическая память"
+          }
+        }
+      }
+    },
+    "Sampling cost": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стоимость отсчёта"
+          }
+        }
+      }
+    },
+    "Widget sharing": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обмен с виджетом"
+          }
+        }
+      }
+    },
+    "Sources & availability": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источники и доступность"
+          }
+        }
+      }
+    },
+    "Core indices come from Mach. Cluster counts come from sysctl; no unverified P/E labels are assigned to individual cores.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Индексы ядер получены из Mach. Число кластеров — из sysctl; неподтверждённые метки P/E отдельным ядрам не присваиваются."
+          }
+        }
+      }
+    },
+    "Used = active + inactive + speculative + wired + compressed − purgeable − file-backed pages. Available = physical − used. Memory pressure is reported by macOS, independently of the usage percentage.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовано = active + inactive + speculative + wired + compressed − purgeable − file-backed pages. Доступно = физическая память − использовано. Давление памяти сообщает macOS независимо от процента использования."
+          }
+        }
+      }
+    },
+    "Private IOHID readings are reported as supplied by macOS. Inactive domains may stay at a 30°C floor. Negative and implausible readings are excluded. These are sensor readings, not a calibrated external thermometer.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показания private IOHID отображаются так, как их сообщает macOS. Неактивные области могут оставаться на уровне 30°C. Отрицательные и неправдоподобные значения исключаются. Это показания сенсоров, а не калиброванный внешний термометр."
+          }
+        }
+      }
+    },
+    "CPU and GPU are modeled power from energy counters, not wall-socket measurements. The component sum is shown only when CPU, GPU and ANE are all available; it is never labeled total Mac power. SMC PSTR is the reported system rail; PHPC is exposed under its raw key because its package boundary is undocumented. Neither is a wall-socket measurement. Battery power is signed: negative means discharge.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность CPU и GPU рассчитана по энергетическим счётчикам, а не измерена в розетке. Сумма компонентов показывается только при наличии CPU, GPU и ANE; она не называется общей мощностью Mac. SMC PSTR — системная линия; PHPC показан под исходным ключом, потому что граница пакета не документирована. Ни одно значение не является измерением из розетки. Знак мощности аккумулятора: отрицательный означает разряд."
+          }
+        }
+      }
+    },
+    "ANE: no matching energy channel exposed by this macOS installation.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANE: эта установка macOS не предоставила подходящий энергетический канал."
+          }
+        }
+      }
+    },
+    "Rates count the primary interface once. A route change starts a new interval. macOS can restrict the Wi-Fi name; MacPulse does not request location access.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скорость считается один раз для основного интерфейса. После смены маршрута начинается новый интервал. macOS может скрыть имя Wi-Fi; MacPulse не запрашивает геопозицию."
+          }
+        }
+      }
+    },
+    "Capacity uses immediately available space, excluding purgeable files. APFS volumes may share a container; their capacities must not be added. Read/write activity covers physical drives together.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ёмкость учитывает доступное место без очищаемых файлов. Томы APFS могут использовать общий контейнер; их ёмкости нельзя складывать. Активность чтения и записи объединяет физические диски."
+          }
+        }
+      }
+    },
+    "Health is full charge capacity / design capacity; it can differ from the rounded macOS battery-health estimate. Electrical values describe the battery, not charger input or total system power.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Состояние — это отношение полной ёмкости заряда к расчётной и оно может отличаться от округлённой оценки macOS. Электрические значения описывают аккумулятор, а не вход зарядного устройства или общую мощность системы."
+          }
+        }
+      }
+    },
+    "No accounts, backend, telemetry or analytics. History stays in memory and is cleared on quit. Only a small timestamped summary is shared with the widget on this Mac.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет учётных записей, сервера, телеметрии или аналитики. История хранится в памяти и очищается при выходе. С виджетом на этом Mac передаётся только небольшой снимок с отметкой времени."
+          }
+        }
+      }
+    },
+    "Show Quick Panel": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать быструю панель"
+          }
+        }
+      }
+    },
+    "Dashboard": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
+          }
+        }
+      }
+    },
+    "Quit MacPulse": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить MacPulse"
+          }
+        }
+      }
+    },
+    "MacPulse · Click for details": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacPulse · нажмите для подробностей"
+          }
+        }
+      }
+    },
+    "Your Mac, at a glance": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваш Mac с первого взгляда"
+          }
+        }
+      }
+    },
+    "Choose the readings you want to keep in sight. Use the arrows to change their order.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите показатели для Menu Bar. Стрелками изменяйте их порядок."
+          }
+        }
+      }
+    },
+    "The menu bar uses a compact width budget. Extra selections appear as +N; all remain available in the panel. Turn every reading off for an icon-only menu item.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В Menu Bar доступна компактная ширина. Лишние пункты обозначаются как +N и остаются в панели. Отключите все показатели, чтобы оставить только значок."
+          }
+        }
+      }
+    },
+    "Sampling": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отсчёты"
+          }
+        }
+      }
+    },
+    "Update every": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Интервал обновления"
+          }
+        }
+      }
+    },
+    "%d seconds": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d с"
+          }
+        }
+      }
+    },
+    "2 seconds is a balanced default. Static information and Wi-Fi refresh every 15 samples. Sampling pauses during sleep.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 секунды — сбалансированный интервал. Статические данные и Wi-Fi обновляются каждые 15 отсчётов. Во время сна отсчёты приостанавливаются."
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оформление"
+          }
+        }
+      }
+    },
+    "Theme": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тема"
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Светлая"
+          }
+        }
+      }
+    },
+    "Dark": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёмная"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык"
+          }
+        }
+      }
+    },
+    "MacPulse follows the per-app language selected in macOS System Settings.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacPulse использует язык приложения, выбранный в системных настройках macOS."
+          }
+        }
+      }
+    },
+    "Current language: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущий язык: %@"
+          }
+        }
+      }
+    },
+    "Open Language & Region Settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть настройки языка и региона"
+          }
+        }
+      }
+    },
+    "Restart MacPulse after changing the per-app language.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "После смены языка приложения перезапустите MacPulse."
+          }
+        }
+      }
+    },
+    "Startup": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запуск"
+          }
+        }
+      }
+    },
+    "Launch at Login": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускать при входе"
+          }
+        }
+      }
+    },
+    "macOS approval is required in Login Items.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требуется разрешение macOS в разделе объектов входа."
+          }
+        }
+      }
+    },
+    "Desktop widget": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виджет рабочего стола"
+          }
+        }
+      }
+    },
+    "Add MacPulse from the macOS widget gallery. Widgets show timestamped snapshots and follow the system refresh budget; the menu bar provides live readings.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте MacPulse из галереи виджетов macOS. Виджеты показывают снимки с отметкой времени и следуют системному интервалу обновления; Menu Bar показывает текущие данные."
+          }
+        }
+      }
+    },
+    "Privacy & history": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конфиденциальность и история"
+          }
+        }
+      }
+    },
+    "All metrics stay on this Mac. History is limited to 900 samples and 30 minutes, and is cleared when MacPulse quits.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все показатели остаются на этом Mac. История ограничена 900 отсчётами и 30 минутами и очищается при выходе MacPulse."
+          }
+        }
+      }
+    },
+    "Notifications": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления"
+          }
+        }
+      }
+    },
+    "Enable alerts": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить предупреждения"
+          }
+        }
+      }
+    },
+    "Conditions must persist for 30 seconds. At most one notification per condition per hour. Alerts are off by default.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Условие должно сохраняться 30 секунд. Не более одного уведомления на условие в час. Предупреждения выключены по умолчанию."
+          }
+        }
+      }
+    },
+    "Thresholds": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пороги"
+          }
+        }
+      }
+    },
+    "CPU temperature: %d°C": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температура CPU: %d°C"
+          }
+        }
+      }
+    },
+    "Low battery: %d%%": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Низкий заряд: %d%%"
+          }
+        }
+      }
+    },
+    "Free storage below: %d GB": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свободное место менее: %d ГБ"
+          }
+        }
+      }
+    },
+    "Memory alerts use critical macOS memory pressure, not a percentage threshold.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предупреждения памяти используют критическое давление macOS, а не процентный порог."
+          }
+        }
+      }
+    },
+    "Permission": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешение"
+          }
+        }
+      }
+    },
+    "Alerts": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предупреждения"
+          }
+        }
+      }
+    },
+    "General": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Основные"
+          }
+        }
+      }
+    },
+    "Menu Bar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu Bar"
+          }
+        }
+      }
+    },
+    "Move %@ earlier": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Переместить %@ выше"
+          }
+        }
+      }
+    },
+    "Move %@ later": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Переместить %@ ниже"
+          }
+        }
+      }
+    },
+    "High CPU temperature": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Высокая температура CPU"
+          }
+        }
+      }
+    },
+    "CPU sensors have remained above %d°C for 30 seconds.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сенсоры CPU показывают выше %d°C уже 30 секунд."
+          }
+        }
+      }
+    },
+    "Critical memory pressure": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Критическое давление памяти"
+          }
+        }
+      }
+    },
+    "macOS reports sustained critical memory pressure.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS сообщает о длительном критическом давлении памяти."
+          }
+        }
+      }
+    },
+    "Low battery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Низкий заряд"
+          }
+        }
+      }
+    },
+    "Battery is at or below %d%%. Connect power when convenient.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заряд аккумулятора не выше %d%%. Подключите питание."
+          }
+        }
+      }
+    },
+    "Low storage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мало места"
+          }
+        }
+      }
+    },
+    "Less than %d GB remains on the system data volume.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На системном томе данных осталось менее %d ГБ."
+          }
+        }
+      }
+    },
+    "Notifications are off by default": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления выключены по умолчанию"
+          }
+        }
+      }
+    },
+    "Notifications allowed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления разрешены"
+          }
+        }
+      }
+    },
+    "Notifications not allowed in macOS Settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления не разрешены в настройках macOS"
+          }
+        }
+      }
+    },
+    "Waiting for first snapshot": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание первого снимка"
+          }
+        }
+      }
+    },
+    "Shared snapshot updated": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий снимок обновлён"
+          }
+        }
+      }
+    },
+    "Shared container: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий контейнер: %@"
+          }
+        }
+      }
+    },
+    "Developer signing required for shared widget data": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для общих данных виджета нужна подпись разработчика"
+          }
+        }
+      }
+    },
+    "Last reading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последнее показание"
+          }
+        }
+      }
+    },
+    "Updated": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновлено"
+          }
+        }
+      }
+    },
+    "Open MacPulse to refresh": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откройте MacPulse для обновления"
+          }
+        }
+      }
+    },
+    "Open MacPulse to share real system readings.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откройте MacPulse, чтобы передать реальные системные показания."
+          }
+        }
+      }
+    },
+    "A timestamped snapshot of your Mac's CPU, memory and battery.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снимок CPU, памяти и аккумулятора Mac с отметкой времени."
+          }
+        }
+      }
+    },
+    "CPU temp": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Температура CPU"
+          }
+        }
+      }
+    },
+    "English": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Английский"
+          }
+        }
+      }
+    },
+    "RAM": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RAM"
+          }
+        }
+      }
+    },
+    "page.CPU": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CPU"
+          }
+        }
+      }
+    },
+    "page.GPU": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPU"
+          }
+        }
+      }
+    },
+    "Controller timestamp unavailable.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время снимка контроллера недоступно."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controller timestamp unavailable."
+          }
+        }
+      }
+    },
+    "Offline": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Офлайн"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline"
+          }
+        }
+      }
+    },
+    "Hidden by macOS privacy": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыто политикой конфиденциальности macOS"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden by macOS privacy"
+          }
+        }
+      }
+    },
+    "Cluster topology unavailable": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Топология кластеров недоступна"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cluster topology unavailable"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -20,17 +20,17 @@ struct PulseWidgetView: View {
         VStack(alignment: .leading, spacing: 10) {
             Label("MacPulse", systemImage: "waveform.path.ecg").font(.headline)
             if let snapshot = entry.snapshot {
-                HStack(spacing: 20) { reading("CPU", snapshot.cpu, "%"); reading("RAM", snapshot.memory, "%"); if family == .systemMedium { reading("Battery", snapshot.battery, "%"); reading("CPU temp", snapshot.temperature, "°C") } }
+                HStack(spacing: 20) { reading(L10n.text("CPU"), snapshot.cpu, "%"); reading(L10n.text("RAM"), snapshot.memory, "%"); if family == .systemMedium { reading(L10n.text("Battery"), snapshot.battery, "%"); reading(L10n.text("CPU temp"), snapshot.temperature, "°C") } }
                 Spacer(minLength: 0)
-                HStack(spacing: 4) { Text(stale ? "Last reading" : "Updated"); Text(snapshot.date, style: .time) }.font(.caption2).foregroundStyle(.secondary)
-                if stale { Text("Open MacPulse to refresh").font(.caption2).foregroundStyle(.secondary) }
+                HStack(spacing: 4) { Text(stale ? L10n.text("Last reading") : L10n.text("Updated")); Text(snapshot.date, style: .time) }.font(.caption2).foregroundStyle(.secondary)
+                if stale { Text(L10n.text("Open MacPulse to refresh")).font(.caption2).foregroundStyle(.secondary) }
             } else {
-                Text("Open MacPulse to share real system readings.").font(.caption).foregroundStyle(.secondary)
+                Text(L10n.text("Open MacPulse to share real system readings.")).font(.caption).foregroundStyle(.secondary)
             }
         }.containerBackground(.background, for: .widget)
     }
     private func reading(_ name: String, _ value: Double?, _ unit: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) { Text(name).font(.caption).foregroundStyle(.secondary); Text(value.map { String(format:"%.0f",$0)+unit } ?? "—").font(.system(size: 23, weight: .medium, design: .rounded)).minimumScaleFactor(0.7).lineLimit(1) }
+        VStack(alignment: .leading, spacing: 6) { Text(name).font(.caption).foregroundStyle(.secondary); Text(value.map { String(format: "%.0f", locale: Locale.current, $0) + unit } ?? "—").font(.system(size: 23, weight: .medium, design: .rounded)).minimumScaleFactor(0.7).lineLimit(1) }
     }
 }
 @main struct MacPulseWidget: Widget {

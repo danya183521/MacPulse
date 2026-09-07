@@ -25,7 +25,7 @@ final class SensorWorker: @unchecked Sendable {
 @MainActor final class SamplingEngine: ObservableObject {
     @Published private(set) var snapshot = Snapshot()
     @Published private(set) var history = HistoryStore()
-    @Published private(set) var widgetStatus = "Waiting for first snapshot"
+    @Published private(set) var widgetStatus = L10n.text("Waiting for first snapshot")
     @Published private(set) var samplingMilliseconds = 0.0
     @Published private(set) var paused = false
     let alerts = AlertEngine()
@@ -76,11 +76,11 @@ final class SensorWorker: @unchecked Sendable {
             if WidgetSnapshot.isConfigured {
                 widgetQueue.async { [weak self] in
                     let message: String
-                    do { try widget.write(); message = "Shared snapshot updated" }
-                    catch { message = "Shared container: \(error.localizedDescription)" }
+                    do { try widget.write(); message = L10n.text("Shared snapshot updated") }
+                    catch { message = L10n.format("Shared container: %@", error.localizedDescription) }
                     Task { @MainActor [weak self] in self?.widgetStatus = message }
                 }
-            } else { widgetStatus = "Developer signing required for shared widget data" }
+            } else { widgetStatus = L10n.text("Developer signing required for shared widget data") }
         }
         if WidgetSnapshot.isConfigured && value.date.timeIntervalSince(lastWidgetReload) >= 900 {
             WidgetCenter.shared.reloadTimelines(ofKind: "MacPulseWidget")

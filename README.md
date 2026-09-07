@@ -2,7 +2,7 @@
 
 Нативный локальный системный монитор для macOS 14+, с приоритетом Apple Silicon. SwiftUI, AppKit, Charts, WidgetKit и системные API Apple; внешних библиотек и web runtime нет.
 
-**Статус:** приложение собирается и запускается на MacBook Air M1. Реальные CPU/GPU/ANE, температуры, память, батарея, сеть и диск проверяются диагностическими программами из этого же проекта. Dashboard, настройки и компактная панель проверены через работающий интерфейс. Полная цель пока **не объявлена выполненной**: WidgetKit с общими данными требует Apple Development signing / App Group; на проверяемом Mac нет доступной signing identity. Детальная граница подтверждения — [CompletionAudit](Docs/CompletionAudit.md).
+**Статус:** приложение собирается и запускается на MacBook Air M1. Реальные CPU/GPU/ANE, температуры, память, батарея, сеть и диск проверяются диагностическими программами из этого же проекта. Dashboard, настройки, компактная панель и русская локализация проверяются через работающий интерфейс. Полная передача данных в WidgetKit по-прежнему требует Apple Development signing / App Group; это отдельная граница проверки в [CompletionAudit](Docs/CompletionAudit.md).
 
 ## Открыть и запустить
 
@@ -31,6 +31,10 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer ./Scripts/build.sh
 - **Dashboard:** Overview, CPU, GPU, Memory, Thermals, Battery, Power, Network, Storage, System. Графики показывают историю текущего запуска.
 - **Settings:** состав и порядок Menu Bar, интервал 1/2/5/10 секунд, System/Light/Dark, Launch at Login, предупреждения. Настройки сохраняются в UserDefaults.
 - **Alerts:** выключены по умолчанию. При включении запрашивается разрешение macOS. Условие должно сохраняться 30 секунд; пауза между сообщениями одного типа — час, с сохранением между запусками. Условия: высокая температура CPU, критический memory pressure, низкий заряд без внешнего питания, мало свободного диска.
+
+## Локализация
+
+Все пользовательские строки хранятся в [Apple String Catalog](Sources/Core/Localizable.xcstrings). В каталоге есть английский исходный язык и полный русский перевод для Dashboard, страниц метрик, Menu Bar, Quick Panel, Settings, предупреждений, статусов, accessibility и WidgetKit. MacPulse использует системный per-app language: откройте Settings → Language → Open Language & Region Settings, добавьте русский для MacPulse и перезапустите приложение. Числа и даты форматируются по текущей локали; технические обозначения CPU, GPU, RAM, ANE и единицы измерения сохраняются компактными.
 
 Launch at Login использует `SMAppService.mainApp`. Он не включается автоматически и может потребовать подтверждения в системных Login Items. Этот сценарий не проверялся фактическим входом в macOS: системные настройки без разрешения не менялись.
 

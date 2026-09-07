@@ -16,7 +16,7 @@ import Combine
         item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         super.init()
         if let button = item.button {
-            button.image = NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: "MacPulse")
+            button.image = NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: L10n.text("MacPulse"))
             button.imagePosition = .imageLeading
             button.font = .monospacedDigitSystemFont(ofSize: 12, weight: .regular)
             button.target = self; button.action = #selector(togglePanel)
@@ -30,8 +30,8 @@ import Combine
     }
     private func updateTitle() {
         item.button?.title = engine.menuText.isEmpty ? "" : " " + engine.menuText
-        item.button?.toolTip = "MacPulse · Click for details"
-        item.button?.setAccessibilityLabel("MacPulse " + engine.menuText)
+        item.button?.toolTip = L10n.text("MacPulse · Click for details")
+        item.button?.setAccessibilityLabel(L10n.text("MacPulse") + " " + engine.menuText)
     }
     func popoverDidClose(_ notification: Notification) { popover.contentViewController = nil }
     func shutdown() { subscriptions.removeAll(); popover.performClose(nil); NSStatusBar.system.removeStatusItem(item) }
