@@ -2,6 +2,7 @@ import Foundation
 
 // Единый каталог задаёт формат, источник и смысл каждой метрики.
 enum Metric: String, CaseIterable, Codable, Identifiable {
+    case health
     case cpu, cpuTemperature, cpuPower, gpu, gpuTemperature, gpuPower, gpuMemory
     case memory, memoryUsed, memoryAvailable, memoryTotal, wired, compressed, cached, swap, swapTotal
     case battery, batteryHealth, cycles, batteryTemperature, voltage, amperage, batteryPower, estimatedRemaining, designCapacity, currentCapacity, maxCapacity
@@ -13,6 +14,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
     }
     var symbol: String {
         switch self {
+        case .health: "gauge.with.dots.needle.67percent"
         case .cpu, .cpuPower: "cpu"
         case .cpuTemperature, .gpuTemperature, .batteryTemperature: "thermometer.medium"
         case .gpu, .gpuMemory, .gpuPower: "square.3.layers.3d"
@@ -27,7 +29,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
     }
     var unit: String {
         switch self {
-        case .cpu, .gpu, .memory, .battery, .batteryHealth, .storage: "%"
+        case .health, .cpu, .gpu, .memory, .battery, .batteryHealth, .storage: "%"
         case .cpuTemperature, .gpuTemperature, .batteryTemperature: "°C"
         case .cpuPower, .gpuPower, .anePower, .computePower, .systemPower, .packagePower, .batteryPower: "W"
         case .download, .upload, .diskRead, .diskWrite: "B/s"
@@ -42,6 +44,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
     }
     private var sourceKey: String {
         switch self {
+        case .health: "health"
         case .systemPower, .packagePower: "smc"
         case .battery: "battery"
         case .cpu: "cpu"
@@ -59,6 +62,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
     }
     var menuPrefix: String {
         switch self {
+        case .health: "HLTH"
         case .cpu, .cpuPower: "CPU"
         case .gpu, .gpuPower, .gpuMemory: "GPU"
         case .memory: "RAM"
@@ -88,7 +92,7 @@ enum Metric: String, CaseIterable, Codable, Identifiable {
         if unit == "%" || unit == "°C" { return number + unit }
         return number + (compact ? "" : " ") + unit
     }
-    static let menuChoices: [Metric] = [.cpu, .cpuTemperature, .gpu, .memory, .battery, .batteryTemperature, .download, .upload, .cpuPower, .gpuPower, .batteryPower, .estimatedRemaining, .systemPower, .anePower, .computePower, .storage]
+    static let menuChoices: [Metric] = [.health, .cpu, .cpuTemperature, .gpu, .memory, .battery, .batteryTemperature, .download, .upload, .cpuPower, .gpuPower, .batteryPower, .estimatedRemaining, .systemPower, .anePower, .computePower, .storage]
 }
 
 struct Volume: Codable, Identifiable { var name: String; var total: Double; var available: Double; var id: String { name } }

@@ -25,12 +25,16 @@ final class SensorWorker: @unchecked Sendable {
 @MainActor final class SamplingEngine: ObservableObject {
     @Published private(set) var snapshot = Snapshot()
     @Published private(set) var history = HistoryStore()
+    @Published private(set) var healthSnapshot = MacHealthSnapshot.initial
+    @Published private(set) var healthHistory: [HealthHistoryPoint] = []
     @Published private(set) var widgetStatus = L10n.text("Waiting for first snapshot")
     @Published private(set) var samplingMilliseconds = 0.0
     @Published private(set) var paused = false
     let batteryIntelligence = BatteryIntelligence()
     let aneIntelligence = ANEIntelligence()
     let alerts = AlertEngine()
+    private let healthEngine: MacHealthEngine
+    private weak var processMonitor: ProcessMonitor?
     private let worker = SensorWorker()
     private let widgetQueue = DispatchQueue(label: "local.macpulse.widget", qos: .utility)
     private let queue = DispatchQueue(label: "local.macpulse.sampling", qos: .utility)
@@ -40,8 +44,10 @@ final class SensorWorker: @unchecked Sendable {
     private var lastWidgetWrite = Date.distantPast
     private var lastWidgetReload = Date.distantPast
     private let preferences: Preferences
-    init(preferences: Preferences) {
+    init(preferences: Preferences, processMonitor: ProcessMonitor? = nil, healthDefaults: UserDefaults? = .standard) {
         self.preferences = preferences
+        self.processMonitor = processMonitor
+        self.healthEngine = MacHealthEngine(defaults: healthDefaults)
         preferences.$interval.removeDuplicates().sink { [weak self] rate in self?.start(rate) }.store(in: &subscriptions)
         let center = NSWorkspace.shared.notificationCenter
         observers.append(center.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { [weak self] _ in Task { @MainActor in self?.stopForSleep() } })
@@ -75,7 +81,9 @@ final class SensorWorker: @unchecked Sendable {
         snapshot = enriched
         samplingMilliseconds = duration
         history.append(enriched)
-        alerts.evaluate(enriched, preferences: preferences)
+        healthSnapshot = healthEngine.evaluate(enriched, processes: processMonitor?.records ?? [])
+        healthHistory = healthEngine.history
+        alerts.evaluate(enriched, health: healthSnapshot, preferences: preferences)
         if enriched.date.timeIntervalSince(lastWidgetWrite) >= 60 {
             let widget = WidgetSnapshot(date: enriched.date, cpu: enriched[.cpu], memory: enriched[.memory], battery: enriched[.battery], temperature: enriched[.cpuTemperature])
             lastWidgetWrite = enriched.date
@@ -97,7 +105,9 @@ final class SensorWorker: @unchecked Sendable {
         let items = preferences.menu
         var result: [String] = []
         for metric in items {
-            let text = [metric.menuPrefix, metric.format(snapshot[metric], compact: true)].filter { !$0.isEmpty }.joined(separator: " ")
+            let text = metric == .health
+                ? "HLTH \(healthSnapshot.overallScore)"
+                : [metric.menuPrefix, metric.format(snapshot[metric], compact: true)].filter { !$0.isEmpty }.joined(separator: " ")
             let candidate = (result + [text]).joined(separator: "  ")
             let width = (candidate as NSString).size(withAttributes: [.font: NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)]).width
             if width > 310 { break }

@@ -1,0 +1,24 @@
+{
+  "measurement_window_seconds": 30,
+  "process": "MacPulse",
+  "measurements": [
+    {
+      "context": "overview health detail closed",
+      "one_core_cpu_percent": 7.426,
+      "rss_start_MiB": 149.61,
+      "rss_end_MiB": 136.06
+    },
+    {
+      "context": "health detail open",
+      "one_core_cpu_percent": 8.164,
+      "rss_start_MiB": 128.16,
+      "rss_end_MiB": 147.50
+    },
+    {
+      "context": "health detail closed under external CPU workload",
+      "one_core_cpu_percent": 5.762,
+      "rss_start_MiB": 137.41,
+      "rss_end_MiB": 137.95
+    }
+  ]
+}

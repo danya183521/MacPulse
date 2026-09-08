@@ -15,8 +15,8 @@ def out(v):
     return json.dumps(str(v))
 file_ids={}
 for p in sorted((root/'Sources').rglob('*')):
-    if p.suffix not in ['.swift','.m','.h','.icns']:continue
-    path=str(p.relative_to(root));typ={'.swift':'sourcecode.swift','.m':'sourcecode.c.objc','.h':'sourcecode.c.h','.icns':'image.icns'}[p.suffix]
+    if p.suffix not in ['.swift','.m','.h','.icns','.xcstrings']:continue
+    path=str(p.relative_to(root));typ={'.swift':'sourcecode.swift','.m':'sourcecode.c.objc','.h':'sourcecode.c.h','.icns':'image.icns','.xcstrings':'text.json.xcstrings'}[p.suffix]
     file_ids[path]=add(path,'PBXFileReference',lastKnownFileType=typ,path=path,sourceTree='<group>')
 for p in sorted((root/'Tests').glob('*.swift')):
     path=str(p.relative_to(root));file_ids[path]=add(path,'PBXFileReference',lastKnownFileType='sourcecode.swift',path=path,sourceTree='<group>')
@@ -39,7 +39,10 @@ for name,extension,ptype in [('MacPulse','app','application'),('MacPulseWidget',
     elif name=='MacPulseWidget': paths=['Sources/Widget/MacPulseWidget.swift','Sources/Core/WidgetSnapshot.swift']
     else: paths=[p for p in file_ids if p.startswith('Tests/')]
     builds=[add(name+p+'build','PBXBuildFile',fileRef=file_ids[p]) for p in paths]
-    phases=[add(name+'sources','PBXSourcesBuildPhase',buildActionMask=2147483647,files=builds,runOnlyForDeploymentPostprocessing=0),add(name+'frameworks','PBXFrameworksBuildPhase',buildActionMask=2147483647,files=[],runOnlyForDeploymentPostprocessing=0),add(name+'resources','PBXResourcesBuildPhase',buildActionMask=2147483647,files=[add('app-icon-build','PBXBuildFile',fileRef=file_ids['Sources/MacPulse/MacPulse.icns'])] if name=='MacPulse' else [],runOnlyForDeploymentPostprocessing=0)]
+    resources=[]
+    if name=='MacPulse': resources.append(add('app-icon-build','PBXBuildFile',fileRef=file_ids['Sources/MacPulse/MacPulse.icns']))
+    if name in ['MacPulse','MacPulseWidget']: resources.append(add(name+'localization-build','PBXBuildFile',fileRef=file_ids['Sources/Core/Localizable.xcstrings']))
+    phases=[add(name+'sources','PBXSourcesBuildPhase',buildActionMask=2147483647,files=builds,runOnlyForDeploymentPostprocessing=0),add(name+'frameworks','PBXFrameworksBuildPhase',buildActionMask=2147483647,files=[],runOnlyForDeploymentPostprocessing=0),add(name+'resources','PBXResourcesBuildPhase',buildActionMask=2147483647,files=resources,runOnlyForDeploymentPostprocessing=0)]
     extra={'PRODUCT_NAME':'$(TARGET_NAME)','PRODUCT_BUNDLE_IDENTIFIER':{'MacPulse':'local.macpulse.MacPulse','MacPulseWidget':'local.macpulse.MacPulse.Widget','MacPulseTests':'local.macpulse.MacPulseTests'}[name],'GENERATE_INFOPLIST_FILE':'YES','LD_RUNPATH_SEARCH_PATHS':['$(inherited)','@executable_path/../Frameworks'],'ENABLE_HARDENED_RUNTIME':'YES'}
     if name=='MacPulse':
         extra.update({'SWIFT_OBJC_BRIDGING_HEADER':'Sources/PrivateSensors/MPNativeSensors.h','CODE_SIGN_ENTITLEMENTS':'Sources/MacPulse/MacPulse.entitlements','INFOPLIST_KEY_LSApplicationCategoryType':'public.app-category.utilities','INFOPLIST_KEY_NSPrincipalClass':'NSApplication','INFOPLIST_KEY_CFBundleDisplayName':'MacPulse','INFOPLIST_KEY_CFBundleIconFile':'MacPulse'})
@@ -55,7 +58,7 @@ for name,extension,ptype in [('MacPulse','app','application'),('MacPulseWidget',
     targets.append(add(name+'target','PBXNativeTarget',buildConfigurationList=configlist(name,extra),buildPhases=phases,buildRules=[],dependencies=dependencies,name=name,productName=name,productReference=product,productType='com.apple.product-type.'+ptype))
 prodgroup=add('products','PBXGroup',children=products,name='Products',sourceTree='<group>')
 group=add('group','PBXGroup',children=list(file_ids.values())+[prodgroup],sourceTree='<group>')
-project=add('project','PBXProject',attributes={'BuildIndependentTargetsInParallel':'YES','LastUpgradeCheck':'2660'},buildConfigurationList=configlist('project',{}),compatibilityVersion='Xcode 14.0',developmentRegion='en',hasScannedForEncodings=0,knownRegions=['en','Base'],mainGroup=group,productRefGroup=prodgroup,projectDirPath='',projectRoot='',targets=targets)
+project=add('project','PBXProject',attributes={'BuildIndependentTargetsInParallel':'YES','LastUpgradeCheck':'2660'},buildConfigurationList=configlist('project',{}),compatibilityVersion='Xcode 14.0',developmentRegion='en',hasScannedForEncodings=0,knownRegions=['en','Base','ru'],mainGroup=group,productRefGroup=prodgroup,projectDirPath='',projectRoot='',targets=targets)
 p=root/'MacPulse.xcodeproj';p.mkdir(exist_ok=True)
 text='// !$*UTF8*$!\n'+out({'archiveVersion':1,'classes':{},'objectVersion':56,'objects':{raw(k)[1]:v for k,v in objects.items()},'rootObject':project})+'\n'
 (p/'project.pbxproj').write_text(text)

@@ -259,7 +259,7 @@ final class ProcessSampler: @unchecked Sendable {
     }
 }
 
-// ProcessMonitor запускает один централизованный timer только пока открыт Processes.
+// ProcessMonitor использует один timer: редкий фоновый режим для Health и быстрый режим открытого экрана.
 @MainActor final class ProcessMonitor: ObservableObject {
     @Published private(set) var records: [ProcessRecord] = []
     @Published private(set) var history: [Int32: [ProcessHistoryPoint]] = [:]
@@ -271,15 +271,54 @@ final class ProcessSampler: @unchecked Sendable {
     private let queue = DispatchQueue(label: "local.macpulse.processes", qos: .utility)
     private var timer: DispatchSourceTimer?
     private var interval = 2.0
+    private var backgroundInterval = 5.0
+    private var backgroundEnabled = false
+    private var interactiveInterval: Double?
     private var applicationMetadata: [Int32: (startDate: Date?, name: String?, bundleIdentifier: String?)] = [:]
 
     func start(interval: Double) {
-        self.interval = max(1, interval)
-        guard timer == nil else { return }
+        interactiveInterval = max(1, interval)
+        applyDesiredInterval()
+    }
+
+    func startBackground(interval: Double = 5) {
+        backgroundEnabled = true
+        backgroundInterval = max(2, interval)
+        applyDesiredInterval()
+    }
+
+    func stopBackground() {
+        backgroundEnabled = false
+        applyDesiredInterval()
+    }
+
+    func stop() {
+        interactiveInterval = nil
+        applyDesiredInterval()
+    }
+
+    func restartIfNeeded(interval: Double) {
+        guard interactiveInterval != nil else { return }
+        interactiveInterval = max(1, interval)
+        applyDesiredInterval()
+    }
+
+    private func applyDesiredInterval() {
+        let desired = interactiveInterval ?? (backgroundEnabled ? backgroundInterval : nil)
+        guard let desired else {
+            timer?.cancel()
+            timer = nil
+            isSampling = false
+            return
+        }
+        guard timer == nil || abs(interval - desired) > 0.01 else { return }
+        timer?.cancel()
+        timer = nil
+        interval = desired
         isSampling = true
         sampler.reset()
         let timer = DispatchSource.makeTimerSource(queue: queue)
-        timer.schedule(deadline: .now(), repeating: self.interval, leeway: .milliseconds(150))
+        timer.schedule(deadline: .now(), repeating: desired, leeway: .milliseconds(250))
         timer.setEventHandler { [weak self, sampler] in
             let started = ProcessInfo.processInfo.systemUptime
             let sample = sampler.sample()
@@ -288,18 +327,6 @@ final class ProcessSampler: @unchecked Sendable {
         }
         self.timer = timer
         timer.resume()
-    }
-
-    func stop() {
-        timer?.cancel()
-        timer = nil
-        isSampling = false
-    }
-
-    func restartIfNeeded(interval: Double) {
-        guard timer != nil, abs(self.interval - interval) > 0.01 else { return }
-        stop()
-        start(interval: interval)
     }
 
     func history(for pid: Int32) -> [ProcessHistoryPoint] {

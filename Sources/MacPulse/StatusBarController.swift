@@ -10,6 +10,7 @@ import Combine
     private let preferences: Preferences
     private var subscriptions = Set<AnyCancellable>()
     var openDashboard: (() -> Void)?
+    var openHealth: (() -> Void)?
     var openSettings: (() -> Void)?
     init(engine: SamplingEngine, preferences: Preferences) {
         self.engine = engine; self.preferences = preferences
@@ -39,7 +40,7 @@ import Combine
         guard let button = item.button else { return }
         if popover.isShown { popover.performClose(nil) }
         else {
-            popover.contentViewController = NSHostingController(rootView: MenuPanel(engine: engine, preferences: preferences, dashboard: { [weak self] in self?.popover.performClose(nil); self?.openDashboard?() }, settings: { [weak self] in self?.popover.performClose(nil); self?.openSettings?() }))
+            popover.contentViewController = NSHostingController(rootView: MenuPanel(engine: engine, preferences: preferences, dashboard: { [weak self] in self?.popover.performClose(nil); self?.openDashboard?() }, health: { [weak self] in self?.popover.performClose(nil); self?.openHealth?() }, settings: { [weak self] in self?.popover.performClose(nil); self?.openSettings?() }))
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             popover.contentViewController?.view.window?.makeKey()
         }

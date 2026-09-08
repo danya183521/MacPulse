@@ -1,6 +1,28 @@
 # Completion audit
 
-Полная цель: [Goal.md](Goal.md). **Цель пока не выполнена полностью.** Наличие build, исходного кода и unit tests не подменяет отсутствующую runtime-проверку WidgetKit.
+Полная цель: [Goal.md](Goal.md). WidgetKit/signing не входит в текущую задачу; Mac Health Engine проверен unit tests и реальными controlled workloads. Оставшиеся ограничения перечислены ниже и не являются подменой runtime evidence.
+
+## Mac Health Engine — финальный аудит
+
+| Критерий | Статус | Evidence |
+|---|---|---|
+| Отдельный локальный analytics layer | PASS | `Sources/Core/MacHealthEngine.swift`; `SamplingEngine` передаёт существующий snapshot и process records |
+| Compute / Memory / Thermals / Battery / Storage | PASS | независимые category snapshots с score, severity, evidence, trend и issues |
+| Duration, rolling values, hysteresis, cooldown | PASS | `HealthThresholds`, `HealthCondition`, recovery debounce; tests A–N |
+| Adaptive baseline и warm-up | PASS | persistent UserDefaults archive, 30 samples/120 s readiness, safe-learning guard |
+| Root cause / confidence / correlation / recommendation | PASS | process grouping, contribution evidence, CPU–thermal и CPU–energy correlations |
+| Overall score и critical overrides | PASS | weighted issue penalties, smoothing, critical caps; explainability deductions в Detail |
+| Реальные CPU workload и recovery | PASS | sustained system CPU 100%; Detail показал High CPU, duration ~1 min, `yes`, peak 100%, score 80→57; после остановки issue исчез, score вернулся к 80 |
+| Реальный memory workload | PASS | безопасный 768 MiB process; UI показал RAM ~81% отдельно от `Memory Pressure: Warning`, sustained Memory issue и score 47 |
+| Реальный disk workload | PASS | launchd-controlled `/dev/urandom` writes; UI показал sustained 348 MB/s, 51 s, Heavy Disk Activity и process contributor |
+| Реальный Core ML / ANE + energy | PASS | 8 concurrent local MobileNetV2FP16 workloads; Overview показал ANE Power 3.0 W, CPU 36%, Battery Power −18.6 W |
+| Overview и Health Detail | PASS | CUA AX/UI: карточка, отдельный экран, issues, evidence, categories, explainability и history |
+| Menu Bar panel и Health metric | PASS | panel показал Health 70; Settings `toggle-health` включён, preview Value 1, status block обновился |
+| English / Russian runtime | PASS | Russian runtime AX подтверждён; English catalog compiled by `xcstringstool`, final launch smoke check below |
+| Full XCTest suite | PASS | 36 tests, 0 failures после финального исправления memory conversion |
+| Performance | PASS | `Scripts/measure-process.py`: Overview 7.43% CPU / 136.06 MiB RSS end, Health Detail 8.16% / 147.50 MiB, Health Detail closed under external CPU workload 5.76% / 137.95 MiB; measurement window 30 s |
+
+Подробная модель описана в [MacHealthEngine.md](MacHealthEngine.md). Mac Health Score — текущая рабочая condition, не оценка hardware wear.
 
 Состояние на 7 сентября 2026 после финальных build/test и запуска Debug. Краткое подтверждение сборки: `Evidence/build-verification.json`.
 

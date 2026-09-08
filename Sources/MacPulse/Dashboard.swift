@@ -3,14 +3,15 @@ import Charts
 
 // Разделы описывают навигацию, не обращаясь к системным API.
 enum SectionPage: String, CaseIterable, Identifiable {
-    case overview = "Overview", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", neuralEngine = "Neural Engine", network = "Network", storage = "Storage", system = "System", processes = "Processes"
+    case overview = "Overview", health = "Mac Health", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", neuralEngine = "Neural Engine", network = "Network", storage = "Storage", system = "System", processes = "Processes"
     var id: String { rawValue }
     var displayName: String { L10n.text("page.\(rawValue)") }
     var symbol: String { switch self {
-        case .overview: "square.grid.2x2"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .neuralEngine: "brain.head.profile"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"; case .processes: "list.bullet.rectangle"
+        case .overview: "square.grid.2x2"; case .health: "gauge.with.dots.needle.67percent"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .neuralEngine: "brain.head.profile"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"; case .processes: "list.bullet.rectangle"
     } }
     var metrics: [Metric] { switch self {
         case .overview: [.cpu,.memory,.cpuTemperature,.battery,.download,.upload,.cpuPower,.anePower,.storage]
+        case .health: []
         case .cpu: [.cpu,.cpuTemperature,.cpuPower]
         case .gpu: [.gpu,.gpuTemperature,.gpuPower,.gpuMemory]
         case .memory: [.memory,.memoryUsed,.memoryAvailable,.memoryTotal,.wired,.compressed,.cached,.swap,.swapTotal]
@@ -25,6 +26,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
     } }
     var charts: [Metric] { switch self {
         case .overview: [.cpu,.memory]
+        case .health: []
         case .cpu: [.cpu,.cpuTemperature,.cpuPower]
         case .gpu: [.gpu,.gpuPower]
         case .memory: [.memory,.swap]
@@ -39,6 +41,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
     } }
     var subtitle: String { switch self {
         case .overview: L10n.text("subtitle.overview")
+        case .health: L10n.text("health.subtitle")
         case .cpu: L10n.text("subtitle.cpu")
         case .gpu: L10n.text("subtitle.gpu")
         case .memory: L10n.text("subtitle.memory")
@@ -118,7 +121,7 @@ struct DashboardView: View {
     @ObservedObject var engine: SamplingEngine
     @ObservedObject var preferences: Preferences
     @ObservedObject var processMonitor: ProcessMonitor
-    @State private var selection: SectionPage? = .overview
+    @Binding var selection: SectionPage?
     @State private var historyMinutes = 5
     @Environment(\.openSettings) private var openSettings
     var body: some View {
@@ -142,6 +145,8 @@ struct DashboardView: View {
                 BatteryView(engine: engine, processMonitor: processMonitor, preferences: preferences)
             } else if page == .neuralEngine {
                 NeuralEngineView(engine: engine)
+            } else if page == .health {
+                MacHealthDetailView(snapshot: engine.healthSnapshot, history: engine.healthHistory)
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
@@ -150,7 +155,10 @@ struct DashboardView: View {
                             Spacer()
                             Text(engine.snapshot.date, style: .time).font(.caption).monospacedDigit().foregroundStyle(.secondary).padding(.top, 10)
                         }
-                        if page == .overview { statusStrip }
+                        if page == .overview {
+                            MacHealthOverviewCard(snapshot: engine.healthSnapshot) { selection = .health }
+                            statusStrip
+                        }
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: page == .overview ? 170 : 210), spacing: 14)], spacing: 14) {
                             ForEach(page.metrics) { MetricCard(metric: $0, snapshot: engine.snapshot) }
                         }
