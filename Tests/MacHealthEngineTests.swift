@@ -20,12 +20,12 @@ final class MacHealthEngineTests: XCTestCase {
 
     func testSustainedCPULoadFindsDominantProcess() {
         let engine = MacHealthEngine(defaults: nil)
-        let processes = [process(name: "Codex", cpu: 164, memory: 1_000_000_000), process(name: "Safari", cpu: 12, memory: 500_000_000)]
+        let processes = [process(name: "DeveloperTool", cpu: 164, memory: 1_000_000_000), process(name: "Safari", cpu: 12, memory: 500_000_000)]
         var result = MacHealthSnapshot.initial
         for second in stride(from: 0.0, through: 90, by: 15) { result = engine.evaluate(snapshot(second, cpu: 96), processes: processes) }
         let issue = result.activeIssues.first { $0.id == "compute.cpu" }
         XCTAssertNotNil(issue)
-        XCTAssertEqual(issue?.rootCause?.name, "Codex")
+        XCTAssertEqual(issue?.rootCause?.name, "DeveloperTool")
         XCTAssertEqual(issue?.rootCause?.confidence, .high)
         XCTAssertLessThan(result.category(.compute).score, 90)
     }
@@ -98,12 +98,12 @@ final class MacHealthEngineTests: XCTestCase {
 
     func testMultipleIssuesCreateCorrelatedDiagnosis() {
         let engine = MacHealthEngine(defaults: nil)
-        let processes = [process(name: "Codex", cpu: 170, memory: 1_500_000_000, energy: 92), process(name: "Other", cpu: 20, memory: 500_000_000, energy: 8)]
+        let processes = [process(name: "DeveloperTool", cpu: 170, memory: 1_500_000_000, energy: 92), process(name: "Other", cpu: 20, memory: 500_000_000, energy: 8)]
         var result = MacHealthSnapshot.initial
         for second in stride(from: 0.0, through: 90, by: 15) {
             result = engine.evaluate(snapshot(second, cpu: 97, cpuTemperature: 95, thermalState: 2, batteryPower: -24), processes: processes)
         }
-        XCTAssertEqual(result.primaryRootCause?.name, "Codex")
+        XCTAssertEqual(result.primaryRootCause?.name, "DeveloperTool")
         XCTAssertEqual(result.activeIssues.first { $0.category == .compute }?.title, L10n.text("health.issue.correlatedCompute"))
         XCTAssertGreaterThanOrEqual(result.activeIssues.count, 3)
     }
