@@ -1,11 +1,19 @@
 import SwiftUI
 import AppKit
 
+// Закрытие последнего окна скрывает Dashboard, но не завершает фоновый мониторинг.
+final class MacPulseAppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false
+    }
+}
+
 @main struct MacPulseApp: App {
     @StateObject private var preferences: Preferences
     @StateObject private var engine: SamplingEngine
     @StateObject private var processMonitor: ProcessMonitor
     @StateObject private var status: StatusBarController
+    @NSApplicationDelegateAdaptor(MacPulseAppDelegate.self) private var appDelegate
     init() {
         let preferences = Preferences()
         _preferences = StateObject(wrappedValue: preferences)
