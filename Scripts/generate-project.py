@@ -22,7 +22,7 @@ for p in sorted((root/'Tests').glob('*.swift')):
     path=str(p.relative_to(root));file_ids[path]=add(path,'PBXFileReference',lastKnownFileType='sourcecode.swift',path=path,sourceTree='<group>')
 products=[];targets=[]
 configs={}
-common={'SDKROOT':'macosx','MACOSX_DEPLOYMENT_TARGET':'14.0','SWIFT_VERSION':'5.0','CLANG_ENABLE_MODULES':'YES','CLANG_ENABLE_OBJC_ARC':'YES','GCC_C_LANGUAGE_STANDARD':'gnu17','SWIFT_STRICT_CONCURRENCY':'targeted','CODE_SIGN_IDENTITY':'-','CODE_SIGN_STYLE':'Manual','CODE_SIGNING_ALLOWED':'YES','ENABLE_USER_SCRIPT_SANDBOXING':'YES','CURRENT_PROJECT_VERSION':'1','MARKETING_VERSION':'1.0','COMBINE_HIDPI_IMAGES':'YES','SWIFT_EMIT_LOC_STRINGS':'YES'}
+common={'SDKROOT':'macosx','MACOSX_DEPLOYMENT_TARGET':'14.0','SWIFT_VERSION':'5.0','CLANG_ENABLE_MODULES':'YES','CLANG_ENABLE_OBJC_ARC':'YES','GCC_C_LANGUAGE_STANDARD':'gnu17','SWIFT_STRICT_CONCURRENCY':'targeted','CODE_SIGN_IDENTITY':'-','CODE_SIGN_STYLE':'Manual','CODE_SIGNING_ALLOWED':'YES','ENABLE_USER_SCRIPT_SANDBOXING':'YES','CURRENT_PROJECT_VERSION':'1','MARKETING_VERSION':'1.0.0','COMBINE_HIDPI_IMAGES':'YES','SWIFT_EMIT_LOC_STRINGS':'YES'}
 def configlist(key,extra):
     ids=[]
     for kind in ['Debug','Release','Signed Debug']:

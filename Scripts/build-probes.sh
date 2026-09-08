@@ -1,7 +1,10 @@
 #!/bin/zsh
 set -euo pipefail
 cd "${0:A:h}/.."
-export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/work/Xcode.app/Contents/Developer}"
+if [[ -z "${DEVELOPER_DIR:-}" ]]; then
+    macpulse_xcode_dir=$(/usr/bin/find /Applications -maxdepth 4 -path '*/Xcode.app/Contents/Developer' -print -quit)
+    export DEVELOPER_DIR="${macpulse_xcode_dir:-$(xcode-select -p)}"
+fi
 mkdir -p .research Evidence
 xcrun clang -fobjc-arc -fmodules -framework Foundation -framework IOKit -framework CoreWLAN -framework SystemConfiguration -I Sources/PrivateSensors Sources/PrivateSensors/MPNativeSensors.m Sources/PrivateSensors/MPNetworkCounters.m Scripts/probe.m -o .research/probe
 xcrun clang -fobjc-arc -framework Foundation -framework IOKit Scripts/smc-audit.m -o .research/smc-audit
