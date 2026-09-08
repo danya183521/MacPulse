@@ -3,6 +3,7 @@ build/
 .research/
 .build/
 release/
+Evidence/
 *.app
 *.dmg
 *.zip
@@ -15,8 +16,3 @@ DerivedData/
 *.xcworkspace/xcuserdata/
 *.swiftpm/
 *.xcresult
-Evidence/*.jsonl
-Evidence/*.png
-Evidence/*.log
-Evidence/app-sample*.txt
-Evidence/energy-audit.txt

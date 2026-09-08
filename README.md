@@ -21,7 +21,7 @@ MacPulse is built with Swift, SwiftUI, AppKit, Charts, WidgetKit, IOKit, Mach AP
 
 ## Local-only and privacy
 
-MacPulse is local-only. System metrics, history, preferences, and health analysis stay on the Mac. The application does not send telemetry, metrics, analytics, crash payloads, or personal data to a server. The optional diagnostic scripts in `Scripts/` are separate from the application; one optional network comparison script can make a request when explicitly run by the developer.
+MacPulse is local-only. System metrics, history, preferences, and health analysis stay on the Mac. The application does not send telemetry, metrics, analytics, crash payloads, or personal data to a server.
 
 ## Requirements
 
@@ -42,23 +42,15 @@ The first downloadable artifact is a local ad-hoc build. It is not Developer ID 
 1. Clone the repository.
 2. Open `MacPulse.xcodeproj` in Xcode.
 3. Select the `MacPulse` scheme and `My Mac` destination.
-4. Choose Debug or Release and press Run.
+4. Choose the `Release` configuration and press Run.
 
-The included script keeps the Xcode selection local to the command:
+For a command-line Release build:
 
 ```sh
-./Scripts/build.sh
 MACPULSE_CONFIGURATION=Release ./Scripts/build.sh build
-MACPULSE_CONFIGURATION=Release ./Scripts/build.sh test
 ```
 
-The script uses `DEVELOPER_DIR` when it is set, detects an installed `Xcode.app` under `/Applications`, and otherwise falls back to `xcode-select`. If Xcode is installed elsewhere, set it for the command:
-
-```sh
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer ./Scripts/build.sh
-```
-
-The project has no external package or file dependency. All application source, native bridges, icon resources, localizations, entitlements, tests, and the Xcode project are stored in this repository.
+The script uses the Xcode installation selected on the local machine. The project has no external package or file dependency. All application source, native bridges, icon resources, localizations, entitlements, tests, and the Xcode project are stored in this repository.
 
 ## Screenshots
 
@@ -93,7 +85,7 @@ The UI does not read sensors directly. Sampling is centralized, history is bound
 
 ## License
 
-No license has been selected for this repository yet. Until a `LICENSE` file is added, all rights remain with the copyright holder. For this local-only utility, the recommended choice is the MIT License; it should be added explicitly before public publication.
+MacPulse is released under the MIT License. See [LICENSE](LICENSE).
 
 ## Disclaimer
 

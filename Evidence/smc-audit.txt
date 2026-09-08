@@ -1,8 +1,0 @@
-open=0 size=80
-#KEY metadata status=0 result=0 size=4 type=75693332 output=80 read=0 result=0 uint32=1514
-Tp09 metadata status=0 result=132 size=0 type=0 output=80 unavailable
-Tp0T metadata status=0 result=132 size=0 type=0 output=80 unavailable
-Tg05 metadata status=0 result=132 size=0 type=0 output=80 unavailable
-PSTR metadata status=0 result=0 size=4 type=666c7420 output=80 read=0 result=0 float=8.332835
-PHPC metadata status=0 result=0 size=4 type=666c7420 output=80 read=0 result=0 float=6.041723
-PDBR metadata status=0 result=132 size=0 type=0 output=80 unavailable
