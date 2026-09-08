@@ -1,0 +1,39 @@
+{
+  "load_exit": 0,
+  "output": "Core ML predictions: 8812; computeUnits: cpuAndNeuralEngine",
+  "sample_command": ".research/probe 12",
+  "ane_watts_values_during_and_after_load": [
+    2.1693698583012044,
+    2.137124929968254,
+    0.6859062042956584,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "cpu_watts_values_during_and_after_load": [
+    2.1712359829104955,
+    3.8040634543613763,
+    3.5307613164571001,
+    4.818417499480659,
+    0.9344647195040844,
+    0.7298584816740125,
+    0.9901913871858001,
+    3.576173405611444,
+    0.818328794122137
+  ],
+  "gpu_watts_values_during_and_after_load": [
+    0.04076526815501661,
+    0.06366165941286615,
+    0.03565189077525126,
+    0.25033861947934444,
+    0.23802257507987062,
+    0.26432236101701356,
+    0.09627245887762136,
+    0.15523554172036158,
+    0.0323274545467699
+  ],
+  "notes": "ANE rose during the Core ML loop and returned to zero after it stopped. Values are modeled IOReport rail power in watts, not utilization percent."
+}

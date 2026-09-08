@@ -3823,6 +3823,262 @@
         }
       }
     },
+    "page.Neural Engine": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine"
+          }
+        }
+      }
+    },
+    "Neural Engine": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine"
+          }
+        }
+      }
+    },
+    "Apple Neural Engine activity and modeled power.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность и расчётная мощность Apple Neural Engine."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Neural Engine activity and modeled power."
+          }
+        }
+      }
+    },
+    "ANE activity is inferred from the power channel; utilization percentage is unavailable.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность ANE определяется по каналу мощности; процент загрузки недоступен."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANE activity is inferred from the power channel; utilization percentage is unavailable."
+          }
+        }
+      }
+    },
+    "ANE Power": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность ANE"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANE Power"
+          }
+        }
+      }
+    },
+    "Active": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активен"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active"
+          }
+        }
+      }
+    },
+    "Idle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неактивен"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idle"
+          }
+        }
+      }
+    },
+    "Activity": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activity"
+          }
+        }
+      }
+    },
+    "Recent Average": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Среднее за последнее время"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent Average"
+          }
+        }
+      }
+    },
+    "Session Peak": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пик за сеанс"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Peak"
+          }
+        }
+      }
+    },
+    "ANE History": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История ANE"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANE History"
+          }
+        }
+      }
+    },
+    "A chart appears when ANE power becomes available.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "График появится, когда мощность ANE станет доступна."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A chart appears when ANE power becomes available."
+          }
+        }
+      }
+    },
+    "Source: private IOReport PMP channel named ANE, unit mJ.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источник: приватный канал IOReport PMP с именем ANE, единица mJ."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: private IOReport PMP channel named ANE, unit mJ."
+          }
+        }
+      }
+    },
+    "ANE Power is energy delta divided by elapsed time. It is a modeled rail estimate, not total SoC power.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мощность ANE — дельта энергии, делённая на прошедшее время. Это расчётная оценка линии, а не общая мощность SoC."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ANE Power is energy delta divided by elapsed time. It is a modeled rail estimate, not total SoC power."
+          }
+        }
+      }
+    },
+    "Utilization %, frequency and workload attribution are unavailable from this source.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Процент загрузки, частота и привязка к отдельным задачам из этого источника недоступны."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilization %, frequency and workload attribution are unavailable from this source."
+          }
+        }
+      }
+    },
+    "subtitle.neuralEngine": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность Neural Engine и расчётная мощность."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neural Engine activity and modeled power."
+          }
+        }
+      }
+    },
     "%.0f W · %@": {
       "localizations": {
         "en": {

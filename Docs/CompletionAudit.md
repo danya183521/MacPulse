@@ -95,6 +95,26 @@ High Energy Usage не использует универсальный поро�
 
 Независимый AC snapshot ранее показал 64%, charging, `Voltage=12.390 V`, `InstantAmperage=+1.932 A`, Battery Power ≈+23.94 W, adapter rated 100 W и SystemPowerIn ≈39.07 W. Физически подключить/отключить адаптер через CUA не удалось, поэтому charging UI transition, charge rate и Time to Full на живом AC переходе не объявляются проверенными; provider sign/units подтверждены этими реальными ioreg properties.
 
+## Neural Engine follow-up, 2026-09-08
+
+Проверен существующий источник ANE и добавлена отдельная страница Neural Engine. Аппаратный сборщик остаётся единственным: `MPNativeSensors` подписывается на приватный `IOReport` channel `PMP / ANE / mJ`, а `SamplingEngine` передаёт готовый `Snapshot` в `ANEIntelligence`. Новый слой не создаёт таймеров и не запускает `powermetrics`.
+
+- Значение ANE — **мощность линии**, а не utilization, residency, active time или частота. Для каждого интервала берётся дельта энергии в `mJ`, переводится в джоули и делится на монотонное elapsed time; результат отображается в `W`. Отдельно CPU/GPU/ANE не смешиваются с `computePower` и не выдаются за полную мощность SoC.
+- На текущем M1 отсутствует проверенный системный процент загрузки ANE. UI поэтому показывает `Active`/`Idle`/`Unavailable`, текущую ANE Power, среднее за последние samples, session peak и честную подпись о недоступности utilization/frequency/workload attribution.
+- Состояние `Active` определяется только при конечной мощности `≥0.05 W`; отрицательные, NaN, Inf и значения вне безопасного диапазона становятся `Unavailable`. Нулевая мощность остаётся реальным `Idle`, а не подставным значением.
+- In-memory history ограничена 30 минутами и 900 точками (что наступит раньше). Страница поддерживает 5/15/30 минут и Session; график строится только по доступным точкам и не растёт бесконечно. Один централизованный sampler используется и для Overview, и для страницы ANE.
+- В Menu Bar уже доступен selectable metric `ANE` с тем же реальным значением мощности; по умолчанию он выключен. Процент загрузки туда не добавляется.
+
+### Runtime correlation
+
+На этом же MacBook Air M1 повторно выполнен локальный Core ML harness `Scripts/ane-load.swift` с `MobileNetV2FP16.mlmodelc` и `computeUnits = .cpuAndNeuralEngine`, без сетевых запросов и пользовательских данных. За цикл получено **8812 predictions** (`load_exit=0`). Параллельный `.research/probe 12` записал ANE `2.169 W → 2.137 W → 0.686 W`, затем нулевые samples после остановки нагрузки. В тех же samples CPU/GPU каналы оставались отдельными (`CPU 2.17–4.82 W`, `GPU 0.03–0.26 W`). Свежая выборка сохранена в [Evidence/ane-load-check-2026-09-08.json](../Evidence/ane-load-check-2026-09-08.json); предыдущая независимая корреляция дала пик 2.468 W и 8996 predictions в [Evidence/ane-load-check.json](../Evidence/ane-load-check.json). Это подтверждает реакцию **ANE power channel** на нагрузку и возврат к baseline, но не доказывает точный utilization percentage.
+
+### UI, localization and validation
+
+`NeuralEngineView` добавляет current hero, status, ANE Power, recent average, session peak, bounded Swift Charts history и источник/ограничения данных. Страница доступна на English и русском; все новые строки добавлены в `Sources/Core/Localizable.xcstrings`. На русском runtime-проверка показала `Неактивен`, `0,00 W`, график и источник IOReport; после нагрузки AX-история зафиксировала пик **2,58 W** и возврат к **0,04 W**. В Overview одновременно видна та же мощность ANE без второго источника данных.
+
+Добавлены XCTest для нормализации, состояний, invalid samples, среднего/пика, bounded history и безопасного чтения реального hardware channel. Debug build и полный XCTest завершены успешно: **18 tests, 0 failures**. После регистрации новых исходников в Xcode проекте стандартный `DerivedData` пересобран; `Contents/Info.plist` содержит `CFBundleIconFile = MacPulse.icns`, а Finder показывает новую иконку. Производственный код не добавляет fake ANE values и не заявляет процент загрузки.
+
 ### Tests и performance
 
 `DEVELOPER_DIR=/Applications/work/Xcode.app/Contents/Developer ./Scripts/build.sh test` завершён: **15 tests, 0 failures**. Новые unit tests покрывают capacity health, mAh/mV/mA conversions, signed watts, rate, smoothing, ETA, insufficient/invalid samples, baseline detection и history bound. Debug build собрал app и Widget extension с локальной ad-hoc подписью (`Sign to Run Locally`).

@@ -170,4 +170,48 @@ final class MacPulseTests: XCTestCase {
         XCTAssertEqual(intelligence.health!, 77.2727, accuracy: 0.01)
         XCTAssertEqual(intelligence.estimatedRemainingHours!, 2.5, accuracy: 0.001)
     }
+
+    func testANEValidationStateAndSummaries() {
+        XCTAssertEqual(ANEMath.validPower(0), 0)
+        XCTAssertEqual(ANEMath.validPower(2.468), 2.468)
+        XCTAssertNil(ANEMath.validPower(nil))
+        XCTAssertNil(ANEMath.validPower(-0.1))
+        XCTAssertNil(ANEMath.validPower(.nan))
+        XCTAssertNil(ANEMath.validPower(.infinity))
+        XCTAssertNil(ANEMath.validPower(1000))
+        XCTAssertEqual(ANEMath.state(power: 0), .idle)
+        XCTAssertEqual(ANEMath.state(power: 0.05), .active)
+        XCTAssertEqual(ANEMath.state(power: nil), .unavailable)
+        XCTAssertEqual(ANEMath.average([0.6, 2.4])!, 1.5, accuracy: 0.001)
+        XCTAssertEqual(ANEMath.peak([0.6, 2.4, .nan])!, 2.4, accuracy: 0.001)
+        XCTAssertNil(ANEMath.average([.nan, -.infinity]))
+        XCTAssertNil(ANEMath.peak([.nan, -.infinity]))
+    }
+
+    @MainActor func testANEHistoryIsBoundedAndKeepsUnavailableSamples() {
+        let intelligence = ANEIntelligence(historyLimit: 4)
+        let start = Date()
+        let values: [Double?] = [nil, 0, 0.2, 1.5, 0.7, 2.0]
+        for (index, value) in values.enumerated() {
+            var snapshot = Snapshot(date: start.addingTimeInterval(Double(index)), values: [:])
+            if let value { snapshot.values[Metric.anePower.rawValue] = value }
+            intelligence.ingest(snapshot)
+        }
+        XCTAssertEqual(intelligence.history.count, 4)
+        XCTAssertEqual(intelligence.history.first?.power, 0.2)
+        XCTAssertEqual(intelligence.power!, 2.0, accuracy: 0.001)
+        XCTAssertEqual(intelligence.state, .active)
+        XCTAssertEqual(intelligence.recentAverage!, 1.1, accuracy: 0.001)
+        XCTAssertEqual(intelligence.peak!, 2.0, accuracy: 0.001)
+        XCTAssertEqual(intelligence.history.filter { $0.power == nil }.count, 0)
+    }
+
+    func testANEReadingFromHardwareIsSafeWhenChannelIsUnavailable() {
+        let snapshot = SensorWorker().sample()
+        if let power = snapshot[.anePower] {
+            XCTAssertTrue(power.isFinite)
+            XCTAssertGreaterThanOrEqual(power, 0)
+            XCTAssertLessThan(power, 1000)
+        }
+    }
 }

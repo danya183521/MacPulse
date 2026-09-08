@@ -29,6 +29,7 @@ final class SensorWorker: @unchecked Sendable {
     @Published private(set) var samplingMilliseconds = 0.0
     @Published private(set) var paused = false
     let batteryIntelligence = BatteryIntelligence()
+    let aneIntelligence = ANEIntelligence()
     let alerts = AlertEngine()
     private let worker = SensorWorker()
     private let widgetQueue = DispatchQueue(label: "local.macpulse.widget", qos: .utility)
@@ -68,6 +69,7 @@ final class SensorWorker: @unchecked Sendable {
     }
     private func receive(_ value: Snapshot, duration: Double) {
         batteryIntelligence.ingest(value)
+        aneIntelligence.ingest(value)
         var enriched = value
         if let remaining = batteryIntelligence.estimatedRemainingHours { enriched.values[Metric.estimatedRemaining.rawValue] = remaining }
         snapshot = enriched

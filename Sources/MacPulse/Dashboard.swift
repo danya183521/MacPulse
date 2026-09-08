@@ -3,20 +3,21 @@ import Charts
 
 // Разделы описывают навигацию, не обращаясь к системным API.
 enum SectionPage: String, CaseIterable, Identifiable {
-    case overview = "Overview", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", network = "Network", storage = "Storage", system = "System", processes = "Processes"
+    case overview = "Overview", cpu = "CPU", gpu = "GPU", memory = "Memory", thermals = "Thermals", battery = "Battery", power = "Power", neuralEngine = "Neural Engine", network = "Network", storage = "Storage", system = "System", processes = "Processes"
     var id: String { rawValue }
     var displayName: String { L10n.text("page.\(rawValue)") }
     var symbol: String { switch self {
-        case .overview: "square.grid.2x2"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"; case .processes: "list.bullet.rectangle"
+        case .overview: "square.grid.2x2"; case .cpu: "cpu"; case .gpu: "square.3.layers.3d"; case .memory: "memorychip"; case .thermals: "thermometer.medium"; case .battery: "battery.75percent"; case .power: "bolt"; case .neuralEngine: "brain.head.profile"; case .network: "network"; case .storage: "internaldrive"; case .system: "laptopcomputer"; case .processes: "list.bullet.rectangle"
     } }
     var metrics: [Metric] { switch self {
-        case .overview: [.cpu,.memory,.cpuTemperature,.battery,.download,.upload,.cpuPower,.storage]
+        case .overview: [.cpu,.memory,.cpuTemperature,.battery,.download,.upload,.cpuPower,.anePower,.storage]
         case .cpu: [.cpu,.cpuTemperature,.cpuPower]
         case .gpu: [.gpu,.gpuTemperature,.gpuPower,.gpuMemory]
         case .memory: [.memory,.memoryUsed,.memoryAvailable,.memoryTotal,.wired,.compressed,.cached,.swap,.swapTotal]
         case .thermals: [.cpuTemperature,.gpuTemperature,.batteryTemperature]
         case .battery: [.battery,.batteryHealth,.batteryPower,.batteryTemperature,.cycles,.voltage,.amperage,.currentCapacity,.maxCapacity,.designCapacity]
         case .power: [.cpuPower,.gpuPower,.anePower,.computePower,.systemPower,.packagePower,.batteryPower]
+        case .neuralEngine: [.anePower]
         case .network: [.download,.upload,.wifiSignal,.wifiNoise,.wifiLink]
         case .storage: [.storage,.storageAvailable,.storageUsed,.storageTotal,.diskRead,.diskWrite]
         case .system: []
@@ -30,6 +31,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
         case .thermals: [.cpuTemperature,.gpuTemperature]
         case .battery: [.battery,.batteryPower]
         case .power: [.cpuPower,.gpuPower,.systemPower]
+        case .neuralEngine: []
         case .network: [.download,.upload]
         case .storage: [.diskRead,.diskWrite]
         case .system: []
@@ -43,6 +45,7 @@ enum SectionPage: String, CaseIterable, Identifiable {
         case .thermals: L10n.text("subtitle.thermals")
         case .battery: L10n.text("subtitle.battery")
         case .power: L10n.text("subtitle.power")
+        case .neuralEngine: L10n.text("subtitle.neuralEngine")
         case .network: L10n.text("subtitle.network")
         case .storage: L10n.text("subtitle.storage")
         case .system: L10n.text("subtitle.system")
@@ -137,6 +140,8 @@ struct DashboardView: View {
                     .background(Color(nsColor: .windowBackgroundColor))
             } else if page == .battery {
                 BatteryView(engine: engine, processMonitor: processMonitor, preferences: preferences)
+            } else if page == .neuralEngine {
+                NeuralEngineView(engine: engine)
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {

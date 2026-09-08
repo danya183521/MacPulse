@@ -131,6 +131,14 @@ Payload содержит только timestamp, CPU, memory, battery, CPU tempe
 - `Scripts/ane-load.swift` — опциональная Core ML нагрузка на локальной модели MobileNetV2FP16 из [официальной галереи Apple](https://developer.apple.com/machine-learning/models/). Модель, её cache и benchmark не входят в приложение и git.
 - `python3 Scripts/measure-process.py` — 30-секундная выборка собственного CPU time/RSS.
 
+## Neural Engine
+
+MacPulse показывает отдельную мощность Apple Neural Engine, когда текущий Mac публикует канал `IOReport PMP / ANE / mJ`. Это дельта энергии, переведённая из `mJ` в джоули и разделённая на монотонное elapsed time. Значение является оценкой мощности линии ANE в `W`; оно не является utilization %, частотой, active time или общей мощностью SoC. При отсутствии канала UI показывает `Unavailable`, а не ноль.
+
+Страница Neural Engine использует тот же централизованный sampler, что и остальные метрики. Она показывает Active/Idle, ANE Power, rolling average, session peak и bounded history chart за 5/15/30 минут или Session. Порог Active — 0.05 W после проверки конечности и диапазона. История ограничена 900 точками и 30 минутами. Metric `ANE` доступен для выбора в Menu Bar, но не включается автоматически.
+
+Локальная проверка на MacBook Air M1 запускает `Scripts/ane-load.swift` с Core ML `computeUnits = .cpuAndNeuralEngine` и сравнивает ANE, CPU и GPU каналы через тот же native probe. При свежем запуске ANE поднялся до 2.169 W и вернулся к нулю после остановки 8812 predictions; это подтверждает реакцию power channel, но не превращает его в неподтверждённый utilization percentage. Подробности и ограничения находятся в [CompletionAudit](Docs/CompletionAudit.md) и [SensorVerification](Docs/SensorVerification.md).
+
 Измеренные сравнения и границы достоверности находятся в [SensorVerification](Docs/SensorVerification.md), итог по каждому критерию — в [CompletionAudit](Docs/CompletionAudit.md). Полные локальные build/test логи лежат в `Evidence`; большие и потенциально персональные диагностические snapshots исключены из git.
 
 Private ABI может измениться в обновлении macOS. Незнакомая модель, отсутствующий символ, ошибка подписки, неизвестная единица или отсутствующий sensor оставляют значение unavailable. Достоверность на других Apple Silicon не объявлена проверенной. Частота sampling не заставляет battery controller или WidgetKit обновляться чаще их собственного расписания.
